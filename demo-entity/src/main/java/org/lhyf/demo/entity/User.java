@@ -2,7 +2,15 @@ package org.lhyf.demo.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+/****
+ * @author YF
+ * @date 2018-06-13 10:58
+ * @desc User 用户实体
+ *
+ **/
 @Entity
 @Table(name = "t_user")
 public class User {
@@ -26,6 +34,10 @@ public class User {
     private Date createDate;
     @Column(name = "last_login_date")
     private Date lastLoginDate;
+
+    @OrderBy("create_time")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Article> articles = new HashSet<>();
 
     public Integer getId() {
         return id;
