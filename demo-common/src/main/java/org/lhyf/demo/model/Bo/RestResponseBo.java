@@ -1,8 +1,8 @@
 package org.lhyf.demo.model.Bo;
 
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.Getter;
+import lombok.Setter;
 
 /****
  * @author YF
@@ -40,4 +40,69 @@ public class RestResponseBo<T> {
      */
     private long timestamp;
 
+    public RestResponseBo() {
+        this.timestamp = System.currentTimeMillis() / 1000;
+    }
+
+    public RestResponseBo(boolean success) {
+        this.timestamp = System.currentTimeMillis() / 1000;
+        this.success = success;
+    }
+
+    public RestResponseBo(boolean success, T payload) {
+        this.timestamp = System.currentTimeMillis() / 1000;
+        this.success = success;
+        this.payload = payload;
+    }
+
+    public RestResponseBo(boolean success, T payload, int code) {
+        this.timestamp = System.currentTimeMillis() / 1000;
+        this.success = success;
+        this.payload = payload;
+        this.code = code;
+    }
+
+    public RestResponseBo(boolean success, String msg) {
+        this.timestamp = System.currentTimeMillis() / 1000;
+        this.success = success;
+        this.msg = msg;
+    }
+
+    public RestResponseBo(boolean success, String msg, int code) {
+        this.timestamp = System.currentTimeMillis() / 1000;
+        this.success = success;
+        this.msg = msg;
+        this.code = code;
+    }
+    public static RestResponseBo ok() {
+        return new RestResponseBo(true);
+    }
+
+    public static <T> RestResponseBo ok(T payload) {
+        return new RestResponseBo(true, payload);
+    }
+
+    public static <T> RestResponseBo ok(int code) {
+        return new RestResponseBo(true, null, code);
+    }
+
+    public static <T> RestResponseBo ok(T payload, int code) {
+        return new RestResponseBo(true, payload, code);
+    }
+
+    public static RestResponseBo fail() {
+        return new RestResponseBo(false);
+    }
+
+    public static RestResponseBo fail(String msg) {
+        return new RestResponseBo(false, msg);
+    }
+
+    public static RestResponseBo fail(int code) {
+        return new RestResponseBo(false, null, code);
+    }
+
+    public static RestResponseBo fail(int code, String msg) {
+        return new RestResponseBo(false, msg, code);
+    }
 }

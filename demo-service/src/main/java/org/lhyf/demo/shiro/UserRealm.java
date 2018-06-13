@@ -2,12 +2,18 @@ package org.lhyf.demo.shiro;
 
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.lhyf.demo.entity.User;
 import org.lhyf.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /****
  * @author YF
@@ -26,7 +32,7 @@ public class UserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        return null;
+    return null;
     }
 
     /**
@@ -53,5 +59,11 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(username,user.getPassword(),source,getName());
 
         return info;
+    }
+
+
+    public static void main(String[] args) {
+        Md5Hash md5Hash = new Md5Hash("123456","tom",1024);
+        System.out.println(md5Hash.toString());
     }
 }

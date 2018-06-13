@@ -7,7 +7,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   redis:
     host: 127.0.0.1
     port: 6379
@@ -25,3 +25,7 @@ spring:
     mode: HTML
     cache: false
 debug: false
+logging:
+  level:
+    org:
+      lhyf: debug

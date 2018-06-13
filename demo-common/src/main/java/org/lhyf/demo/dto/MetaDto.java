@@ -1,4 +1,10 @@
-package org.lhyf.demo.model.Bo;
+package org.lhyf.demo.dto;
 
-public class MetaDto {
+import lombok.Data;
+import org.lhyf.demo.model.Bo.MetaVo;
+
+@Data
+public class MetaDto extends MetaVo {
+
+    private int count;
 }

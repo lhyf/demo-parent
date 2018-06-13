@@ -126,6 +126,8 @@ public class ShiroConfig {
         bean.setUnauthorizedUrl("/403");
 
         Map<String, String> chains = new LinkedHashMap<>();
+        chains.put("/login", "anon");
+        chains.put("/logout", "logout");
         chains.put("/admin/login", "anon");
         chains.put("/admin/css/**", "anon");
         chains.put("/admin/images/**", "anon");
@@ -133,7 +135,7 @@ public class ShiroConfig {
         chains.put("/admin/plugins/**", "anon");
         chains.put("/admin/logout", "anon");
         chains.put("/403", "anon");
-        chains.put("/**", "authc");
+        chains.put("/**", "anon");
 
 
         bean.setFilterChainDefinitionMap(chains);

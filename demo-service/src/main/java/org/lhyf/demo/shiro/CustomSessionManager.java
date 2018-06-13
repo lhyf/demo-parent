@@ -19,7 +19,6 @@ import java.io.Serializable;
  **/
 public class CustomSessionManager extends DefaultWebSessionManager {
 
-    private static Logger logger = LoggerFactory.getLogger(CustomSessionManager.class);
 
     @Override
     protected Session retrieveSession(SessionKey sessionKey) throws UnknownSessionException {
@@ -32,12 +31,10 @@ public class CustomSessionManager extends DefaultWebSessionManager {
         if (request != null && sessionId != null) {
             Session session = (Session) request.getAttribute(sessionId.toString());
             if(session != null){
-                logger.debug("从request获取sesion1");
                 return session;
             }
         }
         Session session = super.retrieveSession(sessionKey);
-        logger.debug("从Redis获取sesion");
         if (request != null && sessionId != null) {
             request.setAttribute(sessionId.toString(), session);
         }
