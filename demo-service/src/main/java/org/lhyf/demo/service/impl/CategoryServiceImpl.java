@@ -1,7 +1,7 @@
 package org.lhyf.demo.service.impl;
 
-import org.lhyf.demo.dao.CategoryDao;
-import org.lhyf.demo.entity.Category;
+import org.lhyf.demo.mapper.TCategoryMapper;
+import org.lhyf.demo.pojo.TCategory;
 import org.lhyf.demo.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +18,10 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
-    private CategoryDao categoryDao;
+    private TCategoryMapper categoryMapper;
 
     @Override
-    public List<Category> findAll() {
-        return categoryDao.findAll();
+    public List<TCategory> findAll() {
+        return categoryMapper.findAll();
     }
 }

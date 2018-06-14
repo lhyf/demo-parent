@@ -1,6 +1,6 @@
 package org.lhyf.demo.service;
 
-import org.lhyf.demo.entity.Category;
+import org.lhyf.demo.pojo.TCategory;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ import java.util.List;
  *
  **/
 public interface CategoryService {
-    List<Category> findAll();
+    List<TCategory> findAll();
 }

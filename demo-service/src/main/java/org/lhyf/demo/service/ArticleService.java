@@ -1,8 +1,8 @@
 package org.lhyf.demo.service;
 
-import org.lhyf.demo.entity.Article;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.lhyf.demo.pojo.TArticle;
+
+import java.util.List;
 
 /****
  * @author YF
@@ -11,5 +11,5 @@ import org.springframework.data.domain.Pageable;
  *
  **/
 public interface ArticleService {
-    Page<Article> findAll(Pageable pageable);
+    List<TArticle> findAll();
 }

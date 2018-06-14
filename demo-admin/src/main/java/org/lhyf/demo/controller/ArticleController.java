@@ -1,14 +1,13 @@
 package org.lhyf.demo.controller;
 
 import com.alibaba.fastjson.JSON;
-import org.lhyf.demo.entity.Article;
-import org.lhyf.demo.entity.Category;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.lhyf.demo.pojo.TArticle;
+import org.lhyf.demo.pojo.TCategory;
 import org.lhyf.demo.service.ArticleService;
 import org.lhyf.demo.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,24 +30,43 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-    @RequestMapping("/list")
-    public String list(Model model){
-        Pageable pageable =PageRequest.of(0, 5);
-        Page<Article> datas = articleService.findAll(pageable);
-        datas.getContent();
-        datas.hasPrevious();
-        datas.hasNext();
-        String s = JSON.toJSONString(datas);
+
+    @RequestMapping("/test")
+    public String test(Model model){
+
+        PageHelper.startPage(1, 2);
+        List<TArticle> datas = articleService.findAll();
+
+        PageInfo<TArticle> pi = new PageInfo<>(datas);
+
+
+        String s = JSON.toJSONString(pi);
         System.out.println("===>" + s);
-        datas.getTotalPages();
-        model.addAttribute("articles",datas);
-        return "admin/rticle_list";
+
+        model.addAttribute("articles", pi);
+        return "admin/test";
+    }
+
+    @RequestMapping("/list")
+    public String list(Model model) {
+
+        PageHelper.startPage(1, 2);
+        List<TArticle> datas = articleService.findAll();
+
+        PageInfo<TArticle> pi = new PageInfo<>(datas);
+
+
+        String s = JSON.toJSONString(pi);
+        System.out.println("===>" + s);
+
+        model.addAttribute("articles", pi);
+        return "admin/article_list";
     }
 
     @RequestMapping("/publish")
-    public String publish(Model model){
-       List<Category> categories = categoryService.findAll();
-        model.addAttribute("categories",categories);
+    public String publish(Model model) {
+        List<TCategory> categories = categoryService.findAll();
+        model.addAttribute("categories", categories);
 //        model.addAttribute("article",new Article());
         return "admin/article_edit";
     }

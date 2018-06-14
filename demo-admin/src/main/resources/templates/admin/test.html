@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='文章管理',active='article'">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <h1>Test Page</h1>
+    <h1>Test Page erwe3w4 </h1>
+    <th:block th:each="post : ${articles.list}">
+        <div th:text="${post.id}"></div>
+    </th:block>
 </body>
 </html>

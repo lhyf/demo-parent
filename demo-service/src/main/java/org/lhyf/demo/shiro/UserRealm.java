@@ -2,18 +2,13 @@ package org.lhyf.demo.shiro;
 
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.lhyf.demo.entity.User;
+import org.lhyf.demo.pojo.TUser;
 import org.lhyf.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /****
  * @author YF
@@ -45,7 +40,7 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String username = upToken.getUsername();
-        User user = userService.findByName(username);
+        TUser user = userService.selectByName(username);
 
         if(user==null){
             throw new UnknownAccountException("用户不存在!");

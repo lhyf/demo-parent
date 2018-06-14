@@ -1,12 +1,12 @@
 package org.lhyf.demo.service.impl;
 
-import org.lhyf.demo.dao.ArticleDao;
-import org.lhyf.demo.entity.Article;
+import org.lhyf.demo.mapper.TArticleMapper;
+import org.lhyf.demo.pojo.TArticle;
 import org.lhyf.demo.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /****
  * @author YF
@@ -19,10 +19,12 @@ import org.springframework.stereotype.Service;
 public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
-    private ArticleDao articleDao;
+    private TArticleMapper articleMapper;
 
     @Override
-    public Page<Article> findAll(Pageable pageable) {
-        return articleDao.findAll(pageable);
+    public List<TArticle> findAll() {
+        return articleMapper.findAll();
     }
+
+
 }

@@ -24,27 +24,27 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <th:block th:each="post : ${articles.content}">
+                            <th:block th:each="post : ${articles.list}">
                                 <tr th:cid="${post.id}">
                                     <td>
-                                        <a th:href="@{'/article/'+${post.id}}" th:text="${post.title}"></a>
+                                        <a th:href="@{'/admin/article/'+${post.id}}" th:text="${post.title}"></a>
                                     </td>
-                                    <!--<td><th:block th:text="${commons.fmtdate(post.created, 'yyyy-MM-dd HH:mm:ss')}"/></td>-->
-                                    <!--<td><th:block th:text="${post.hits}"/></td>-->
+                                    <td><th:block th:text="${post.createTime}"/></td>
+                                    <td><th:block th:text="${post.hits}"/></td>
                                     <td><th:block th:text="${post.categories}"/></td>
                                     <td>
                                         <th:block th:if="${post.status == 'publish'}">
                                             <span class="label label-success">已发布</span>
                                         </th:block>
-                                       <th:block th:if="${post.status == 'draft'}">
-                                           <span class="label label-default">草稿</span>
-                                       </th:block>
+                                        <th:block th:if="${post.status == 'draft'}">
+                                            <span class="label label-default">草稿</span>
+                                        </th:block>
                                     </td>
                                     <td>
                                         <a th:href="@{'/admin/article/'+${post.id}}"
                                            class="btn btn-primary btn-sm waves-effect waves-light m-b-5"><i
                                                 class="fa fa-edit"></i> <span>编辑</span></a>
-                                        <a href="javascript:void(0)" th:onclick="'delPost('+${post.cid}+');'"
+                                        <a href="javascript:void(0)" th:onclick="'delPost('+${post.id}+');'"
                                            class="btn btn-danger btn-sm waves-effect waves-light m-b-5"><i
                                                 class="fa fa-trash-o"></i> <span>删除</span></a>
                                         <a class="btn btn-warning btn-sm waves-effect waves-light m-b-5" th:href="${commons.permalink(post)}+'/preview'"
