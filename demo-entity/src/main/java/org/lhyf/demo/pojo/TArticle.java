@@ -1,8 +1,6 @@
 package org.lhyf.demo.pojo;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 public class TArticle {
     private Integer id;
@@ -19,7 +17,6 @@ public class TArticle {
 
     private String status;
 
-    private Set<TTag> tags = new HashSet<>();
 
     private Integer hits;
 
@@ -59,7 +56,6 @@ public class TArticle {
         this.uri = uri == null ? null : uri.trim();
     }
 
-
     public TCategory getCategory() {
         return category;
     }
@@ -90,14 +86,6 @@ public class TArticle {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
-    }
-
-    public Set<TTag> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<TTag> tags) {
-        this.tags = tags;
     }
 
     public Integer getHits() {

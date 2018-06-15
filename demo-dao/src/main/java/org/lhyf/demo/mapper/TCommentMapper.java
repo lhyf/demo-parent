@@ -1,9 +1,10 @@
 package org.lhyf.demo.mapper;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.lhyf.demo.pojo.TComment;
 import org.lhyf.demo.pojo.TCommentExample;
+
+import java.util.List;
 
 public interface TCommentMapper {
     int countByExample(TCommentExample example);

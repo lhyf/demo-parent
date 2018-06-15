@@ -28,11 +28,11 @@ var tale = new $.tale();
  */
 function subArticle(status) {
     var title = $('#articleForm input[name=title]').val();
-    var content = $('#text').val();
     if (title == '') {
         tale.alertWarn('请输入文章标题');
         return;
     }
+    var content = $('#text').val();
     if (content == '') {
         tale.alertWarn('请输入文章内容');
         return;
@@ -41,7 +41,7 @@ function subArticle(status) {
     $("#articleForm #status").val(status);
     $("#articleForm #categories").val($('#multiple-sel').val());
     var params = $("#articleForm").serialize();
-    var url = $('#articleForm #cid').val() != '' ? '/admin/article/modify' : '/admin/article/publish';
+    var url = $('#articleForm #cid').val() != '' ? '/article/modify' : '/article/publish';
     tale.post({
         url:url,
         data:params,
@@ -51,7 +51,7 @@ function subArticle(status) {
                     text:'文章保存成功',
                     then: function () {
                         setTimeout(function () {
-                            window.location.href = '/admin/article';
+                            window.location.href = '/article/list';
                         }, 500);
                     }
                 });

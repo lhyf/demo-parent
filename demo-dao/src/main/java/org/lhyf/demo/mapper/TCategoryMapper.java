@@ -29,5 +29,5 @@ public interface TCategoryMapper {
 
     int updateByPrimaryKey(TCategory record);
 
-    List<TCategory> findAll();
+
 }

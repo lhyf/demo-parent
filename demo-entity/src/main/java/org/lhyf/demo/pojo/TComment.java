@@ -19,9 +19,9 @@ public class TComment {
 
     private String status;
 
-    private TArticle article;
+    private Integer articleId;
 
-    private TComment comment;
+    private Integer parent;
 
     public Integer getId() {
         return id;
@@ -87,19 +87,19 @@ public class TComment {
         this.status = status == null ? null : status.trim();
     }
 
-    public TArticle getArticle() {
-        return article;
+    public Integer getArticleId() {
+        return articleId;
     }
 
-    public void setArticle(TArticle article) {
-        this.article = article;
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 
-    public TComment getComment() {
-        return comment;
+    public Integer getParent() {
+        return parent;
     }
 
-    public void setComment(TComment comment) {
-        this.comment = comment;
+    public void setParent(Integer parent) {
+        this.parent = parent;
     }
 }

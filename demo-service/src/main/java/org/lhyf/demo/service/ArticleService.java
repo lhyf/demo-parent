@@ -1,5 +1,6 @@
 package org.lhyf.demo.service;
 
+import org.lhyf.demo.message.vo.ArticleVo;
 import org.lhyf.demo.pojo.TArticle;
 
 import java.util.List;
@@ -12,4 +13,7 @@ import java.util.List;
  **/
 public interface ArticleService {
     List<TArticle> findAll();
+
+    void insert(ArticleVo vo);
+
 }

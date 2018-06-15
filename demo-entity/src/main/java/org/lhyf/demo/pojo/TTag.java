@@ -1,15 +1,11 @@
 package org.lhyf.demo.pojo;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 public class TTag {
     private Integer id;
 
     private String name;
-
-    private Set<TArticle> articles = new HashSet<>();
 
     private Integer tagCount;
 
@@ -45,13 +41,5 @@ public class TTag {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Set<TArticle> getArticles() {
-        return articles;
-    }
-
-    public void setArticles(Set<TArticle> articles) {
-        this.articles = articles;
     }
 }

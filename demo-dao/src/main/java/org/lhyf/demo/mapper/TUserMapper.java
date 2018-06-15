@@ -28,6 +28,4 @@ public interface TUserMapper {
     int updateByPrimaryKeySelective(TUser record);
 
     int updateByPrimaryKey(TUser record);
-
-    TUser selectByName(String name);
 }

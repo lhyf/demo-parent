@@ -1,9 +1,10 @@
 package org.lhyf.demo.mapper;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.lhyf.demo.pojo.TArticleTag;
 import org.lhyf.demo.pojo.TArticleTagExample;
+
+import java.util.List;
 
 public interface TArticleTagMapper {
     int countByExample(TArticleTagExample example);

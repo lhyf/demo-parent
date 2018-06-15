@@ -1,14 +1,9 @@
 package org.lhyf.demo.pojo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TCategory {
     private Integer id;
 
     private String name;
-
-    private List<TArticle> articles = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -24,13 +19,5 @@ public class TCategory {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
-    }
-
-    public List<TArticle> getArticles() {
-        return articles;
-    }
-
-    public void setArticles(List<TArticle> articles) {
-        this.articles = articles;
     }
 }

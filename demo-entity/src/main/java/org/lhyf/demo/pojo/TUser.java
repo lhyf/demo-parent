@@ -1,8 +1,6 @@
 package org.lhyf.demo.pojo;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class TUser {
     private Integer id;
@@ -18,8 +16,6 @@ public class TUser {
     private String password;
 
     private String status;
-
-    private List<TArticle> articles = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -77,11 +73,16 @@ public class TUser {
         this.status = status == null ? null : status.trim();
     }
 
-    public List<TArticle> getArticles() {
-        return articles;
-    }
-
-    public void setArticles(List<TArticle> articles) {
-        this.articles = articles;
+    @Override
+    public String toString() {
+        return "TUser{" +
+                "id=" + id +
+                ", createDate=" + createDate +
+                ", lastLoginDate=" + lastLoginDate +
+                ", name='" + name + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

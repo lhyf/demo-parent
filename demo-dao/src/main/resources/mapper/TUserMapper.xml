@@ -9,20 +9,6 @@
     <result column="nickname" property="nickname" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
-    <collection property="articles" ofType="org.lhyf.demo.pojo.TArticle">
-      <id column="id" property="id" jdbcType="INTEGER" />
-      <result column="title" property="title" jdbcType="VARCHAR" />
-      <result column="uri" property="uri" jdbcType="VARCHAR" />
-      <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-      <result column="status" property="status" jdbcType="VARCHAR" />
-      <result column="tags" property="tags" jdbcType="VARCHAR" />
-      <result column="hits" property="hits" jdbcType="INTEGER" />
-      <result column="pv" property="pv" jdbcType="INTEGER" />
-      <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-      <result column="allow_feed" property="allowFeed" jdbcType="BIT" />
-      <result column="allow_ping" property="allowPing" jdbcType="BIT" />
-      <result column="allow_comment" property="allowComment" jdbcType="BIT" />
-    </collection>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -254,12 +240,4 @@
       status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select
-    <include refid="Base_Column_List" />
-    from t_user
-    where name = #{name,jdbcType=VARCHAR}
-  </select>
-
 </mapper>

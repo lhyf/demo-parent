@@ -3,9 +3,9 @@ package org.lhyf.demo.pojo;
 public class TArticleTag {
     private Integer id;
 
-   private TArticle article;
+    private Integer articleId;
 
-   private TTag tag;
+    private Integer tagId;
 
     public Integer getId() {
         return id;
@@ -15,19 +15,19 @@ public class TArticleTag {
         this.id = id;
     }
 
-    public TArticle getArticle() {
-        return article;
+    public Integer getArticleId() {
+        return articleId;
     }
 
-    public void setArticle(TArticle article) {
-        this.article = article;
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 
-    public TTag getTag() {
-        return tag;
+    public Integer getTagId() {
+        return tagId;
     }
 
-    public void setTag(TTag tag) {
-        this.tag = tag;
+    public void setTagId(Integer tagId) {
+        this.tagId = tagId;
     }
 }
