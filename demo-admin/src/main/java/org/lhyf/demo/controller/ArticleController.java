@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.lhyf.demo.message.vo.ArticleVo;
 import org.lhyf.demo.model.Bo.RestResponseBo;
@@ -57,14 +58,9 @@ public class ArticleController {
      */
     @ResponseBody
     @PostMapping("/publish")
-    public RestResponseBo publishArticle(@Valid ArticleVo article, BindingResult result, HttpServletRequest request){
-
-       String name = (String) request.getSession().getAttribute("username");
-
-        System.out.println(name);
+    public RestResponseBo publishArticle(@Valid ArticleVo article, BindingResult result){
 
         Subject subject = SecurityUtils.getSubject();
-        System.out.println(subject.getSession().getId());
         String username = (String) subject.getSession().getAttribute("username");
         TUser user = userService.selectByName(username);
         article.setUserId(user.getId());
@@ -111,17 +107,9 @@ public class ArticleController {
     }
 
     @RequestMapping("/publish")
-    public String publish(Model model,HttpServletRequest request) {
-        Subject subject = SecurityUtils.getSubject();
-        String username = (String) subject.getSession().getAttribute("username");
-
-        System.out.println(username);
-
-        System.out.println(request.getSession().getAttribute("usernam333"));
-
+    public String publish(Model model) {
         List<TCategory> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
-//        model.addAttribute("article",new Article());
         return "admin/article_edit";
     }
 }

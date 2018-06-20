@@ -1,5 +1,6 @@
 package org.lhyf.demo.controller;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.session.Session;
@@ -41,15 +42,7 @@ public class IndexController {
 
     @ResponseBody
     @PostMapping(value = "/login")
-    public RestResponseBo login(String username,String password,boolean remeber_me,HttpServletRequest request){
-
-        request.getSession().setAttribute("usernam333", username);
-
-        String username333 = (String) request.getSession().getAttribute("usernam333");
-
-        System.out.println(username333);
-
-
+    public RestResponseBo login(String username,String password,boolean remeber_me){
 
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
@@ -59,10 +52,7 @@ public class IndexController {
             upToken.setRememberMe(remeber_me);
             subject.login(upToken);
             session.setAttribute("username", username);
-            session.setTimeout(7 * 24 * 3600 * 1000);
-            System.out.println(subject.getSession().getId());
             String userName = (String) session.getAttribute("username");
-            logger.info("=====> "+userName);
         }catch (UnknownAccountException e){
             return RestResponseBo.fail(500,"账号不存在!");
         }catch (IncorrectCredentialsException e){

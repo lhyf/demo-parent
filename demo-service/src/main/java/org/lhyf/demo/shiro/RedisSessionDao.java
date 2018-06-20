@@ -54,7 +54,7 @@ public class RedisSessionDao extends AbstractSessionDAO {
     private void saveSession(Session session) {
         if (session != null && session.getId() != null) {
             String key = session.getId().toString();
-            redisSet(getKey(key), session);
+            redisSet(key, session);
         }
     }
 
