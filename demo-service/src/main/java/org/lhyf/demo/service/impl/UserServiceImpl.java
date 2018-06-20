@@ -21,7 +21,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public TUser selectByName(String name) {
-//        userMapper.selectByName(name);
-        return null;
+        return userMapper.selectByName(name);
     }
 }

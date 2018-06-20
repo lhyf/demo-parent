@@ -2,6 +2,7 @@ package org.lhyf.demo.controller;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.lhyf.demo.model.Bo.RestResponseBo;
 import org.lhyf.demo.model.Bo.StatisticsBo;
@@ -40,15 +41,28 @@ public class IndexController {
 
     @ResponseBody
     @PostMapping(value = "/login")
-    public RestResponseBo login(String username,String password,boolean remeber_me ){
-        Subject subject = SecurityUtils.getSubject();
+    public RestResponseBo login(String username,String password,boolean remeber_me,HttpServletRequest request){
 
+        request.getSession().setAttribute("usernam333", username);
+
+        String username333 = (String) request.getSession().getAttribute("usernam333");
+
+        System.out.println(username333);
+
+
+
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
         UsernamePasswordToken upToken = new UsernamePasswordToken(username,password);
 
         try{
             upToken.setRememberMe(remeber_me);
             subject.login(upToken);
-
+            session.setAttribute("username", username);
+            session.setTimeout(7 * 24 * 3600 * 1000);
+            System.out.println(subject.getSession().getId());
+            String userName = (String) session.getAttribute("username");
+            logger.info("=====> "+userName);
         }catch (UnknownAccountException e){
             return RestResponseBo.fail(500,"账号不存在!");
         }catch (IncorrectCredentialsException e){

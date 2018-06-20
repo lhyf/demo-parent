@@ -28,14 +28,14 @@ public class BaseInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        logger.debug(request.getMethod() + " : " + request.getRequestURI());
+//        logger.debug(request.getMethod() + " : " + request.getRequestURI());
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
 
-        logger.debug("postHandle...");
+//        logger.debug("postHandle...");
         request.setAttribute("commons", commons);//一些工具类和公共方法
     }
 

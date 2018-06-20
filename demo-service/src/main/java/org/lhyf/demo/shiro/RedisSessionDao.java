@@ -68,7 +68,7 @@ public class RedisSessionDao extends AbstractSessionDAO {
 
     @Override
     protected Session doReadSession(Serializable sessionId) {
-        logger.info("read session...");
+//        logger.info("read session...");
         if (sessionId == null) {
             return null;
         }

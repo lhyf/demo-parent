@@ -13,6 +13,9 @@ import org.lhyf.demo.pojo.TCategory;
 import org.lhyf.demo.pojo.TUser;
 import org.lhyf.demo.service.ArticleService;
 import org.lhyf.demo.service.CategoryService;
+import org.lhyf.demo.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -34,11 +38,16 @@ import java.util.List;
 @RequestMapping("/article")
 public class ArticleController {
 
+    private static Logger logger = LoggerFactory.getLogger(ArticleController.class);
+
     @Autowired
     private CategoryService categoryService;
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 保存文章
@@ -48,10 +57,16 @@ public class ArticleController {
      */
     @ResponseBody
     @PostMapping("/publish")
-    public RestResponseBo publishArticle(@Valid ArticleVo article, BindingResult result){
+    public RestResponseBo publishArticle(@Valid ArticleVo article, BindingResult result, HttpServletRequest request){
+
+       String name = (String) request.getSession().getAttribute("username");
+
+        System.out.println(name);
 
         Subject subject = SecurityUtils.getSubject();
-        TUser user = (TUser) subject.getSession().getAttribute("user");
+        System.out.println(subject.getSession().getId());
+        String username = (String) subject.getSession().getAttribute("username");
+        TUser user = userService.selectByName(username);
         article.setUserId(user.getId());
 
         String tags = article.getTags();
@@ -96,7 +111,14 @@ public class ArticleController {
     }
 
     @RequestMapping("/publish")
-    public String publish(Model model) {
+    public String publish(Model model,HttpServletRequest request) {
+        Subject subject = SecurityUtils.getSubject();
+        String username = (String) subject.getSession().getAttribute("username");
+
+        System.out.println(username);
+
+        System.out.println(request.getSession().getAttribute("usernam333"));
+
         List<TCategory> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
 //        model.addAttribute("article",new Article());

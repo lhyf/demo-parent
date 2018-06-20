@@ -22,7 +22,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<TCategory> findAll() {
-//        return categoryMapper.findAll();
-        return null;
+        return categoryMapper.findAll();
     }
 }

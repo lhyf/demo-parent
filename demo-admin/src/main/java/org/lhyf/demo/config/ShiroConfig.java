@@ -76,6 +76,7 @@ public class ShiroConfig {
     public CustomSessionManager customSessionManager() {
         CustomSessionManager sessionManager = new CustomSessionManager();
         sessionManager.setSessionDAO(sessionDao());
+        sessionManager.setGlobalSessionTimeout(3600);
         return sessionManager;
     }
 
