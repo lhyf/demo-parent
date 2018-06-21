@@ -98,9 +98,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="org.lhyf.demo.pojo.TArticleTag" >
-    insert into t_article_tag (id, article_id, tag_id
+    insert into t_article_tag (article_id, tag_id
       )
-    values (#{id,jdbcType=INTEGER}, #{articleId,jdbcType=INTEGER}, #{tagId,jdbcType=INTEGER}
+    values (#{articleId,jdbcType=INTEGER}, #{tagId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="org.lhyf.demo.pojo.TArticleTag" >

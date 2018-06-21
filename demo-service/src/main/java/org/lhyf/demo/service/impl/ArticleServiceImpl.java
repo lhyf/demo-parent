@@ -1,10 +1,16 @@
 package org.lhyf.demo.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import org.lhyf.demo.constant.WebConst;
 import org.lhyf.demo.mapper.TArticleMapper;
 import org.lhyf.demo.message.vo.ArticleVo;
+import org.lhyf.demo.model.Bo.ArticleBo;
 import org.lhyf.demo.pojo.TArticle;
-import org.lhyf.demo.pojo.TCategory;
+import org.lhyf.demo.pojo.TArticleExample;
+import org.lhyf.demo.pojo.TUser;
 import org.lhyf.demo.service.ArticleService;
+import org.lhyf.demo.service.UserService;
+import org.lhyf.demo.utils.Commons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,31 +30,64 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private TArticleMapper articleMapper;
 
-    @Override
-    public List<TArticle> findAll() {
+    @Autowired
+    private UserService userService;
 
-        return articleMapper.findAll();
+    /**
+     * 使用 文章id 查询文章
+     * @param id
+     * @return
+     */
+    @Override
+    public ArticleBo selectArticleById(Integer id){
+        return articleMapper.selectArticleById(id);
+    }
+
+    /**
+     * 获取账号对应的所有文章
+     * @return
+     */
+    @Override
+    public List<ArticleBo> findOwnAll(Integer userId) {
+        return articleMapper.findOwnAll(userId);
     }
 
     @Override
-    public void insert(ArticleVo vo) {
-        TCategory category = new TCategory();
-        category.setId(vo.getCategory());
+    public TArticle insert(ArticleVo vo) {
+
 
         TArticle article = new TArticle();
         article.setTitle(vo.getTitle());
         article.setUri(vo.getUri());
-        article.setCategory(category);
+        article.setCategoryId(vo.getCategory());
+        article.setUserId(vo.getUserId());
+        article.setCreateTime(new Date());
         article.setStatus(vo.getStatus());
+        article.setHits(0);
+        article.setPv(0);
         article.setAllowComment(vo.getAllowComment());
         article.setAllowFeed(vo.getAllowFeed());
         article.setAllowPing(vo.getAllowPing());
         article.setContent(vo.getContent());
-        article.setCreateTime(new Date());
-        article.setHits(0);
-        article.setPv(0);
-//        article.setUser();
+        articleMapper.insert(article);
+        return article;
     }
 
+    @Override
+    public int updateByExampleWithBLOBs(ArticleVo article){
+        TArticle record = new TArticle();
+        record.setId(article.getId());
+        record.setCategoryId(article.getCategory());
+        record.setTitle(article.getTitle());
+        record.setUri(article.getUri());
+        record.setStatus(article.getStatus());
+        record.setContent(article.getContent());
+        record.setAllowPing(article.getAllowPing());
+        record.setAllowFeed(article.getAllowFeed());
+        record.setAllowComment(article.getAllowComment());
+        record.setUpdateTime(new Date());
+
+        return  articleMapper.updateByPrimaryKeySelective(record);
+    }
 
 }

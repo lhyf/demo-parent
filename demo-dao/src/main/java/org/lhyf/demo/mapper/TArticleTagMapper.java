@@ -1,6 +1,7 @@
 package org.lhyf.demo.mapper;
 
 import org.apache.ibatis.annotations.Param;
+import org.lhyf.demo.message.vo.ArticleVo;
 import org.lhyf.demo.pojo.TArticleTag;
 import org.lhyf.demo.pojo.TArticleTagExample;
 
@@ -28,4 +29,7 @@ public interface TArticleTagMapper {
     int updateByPrimaryKeySelective(TArticleTag record);
 
     int updateByPrimaryKey(TArticleTag record);
+
+
+    int update(ArticleVo article);
 }

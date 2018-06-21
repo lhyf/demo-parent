@@ -7,6 +7,15 @@ public class TArticleTag {
 
     private Integer tagId;
 
+
+    public TArticleTag() {
+    }
+
+    public TArticleTag(Integer articleId, Integer tagId) {
+        this.articleId = articleId;
+        this.tagId = tagId;
+    }
+
     public Integer getId() {
         return id;
     }

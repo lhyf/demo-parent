@@ -11,6 +11,15 @@ public class TTag {
 
     private Date createTime;
 
+    public TTag() {
+    }
+
+    public TTag(String name, Integer tagCount, Date createTime) {
+        this.name = name;
+        this.tagCount = tagCount;
+        this.createTime = createTime;
+    }
+
     public Integer getId() {
         return id;
     }

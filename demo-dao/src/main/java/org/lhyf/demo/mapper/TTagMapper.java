@@ -28,4 +28,11 @@ public interface TTagMapper {
     int updateByPrimaryKeySelective(TTag record);
 
     int updateByPrimaryKey(TTag record);
+
+    int incrTagCountByPrimaryKey(Integer id);
+
+
+    int decrTagCountByPrimaryKey(Integer id);
+
+    List<TTag> selectTagLisByArticleId(Integer id);
 }

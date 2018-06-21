@@ -1,10 +1,10 @@
 package org.lhyf.demo.controller;
 
-import com.alibaba.fastjson.JSON;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.lhyf.demo.constant.WebConst;
 import org.lhyf.demo.model.Bo.RestResponseBo;
 import org.lhyf.demo.model.Bo.StatisticsBo;
 import org.lhyf.demo.model.Vo.CommentVo;
@@ -51,8 +51,7 @@ public class IndexController {
         try{
             upToken.setRememberMe(remeber_me);
             subject.login(upToken);
-            session.setAttribute("username", username);
-            String userName = (String) session.getAttribute("username");
+            session.setAttribute(WebConst.USERNAME_SESSION, username);
         }catch (UnknownAccountException e){
             return RestResponseBo.fail(500,"账号不存在!");
         }catch (IncorrectCredentialsException e){

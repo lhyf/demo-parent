@@ -27,7 +27,7 @@ public class RedisSessionDao extends AbstractSessionDAO {
 
     private static Logger logger = LoggerFactory.getLogger(RedisSessionDao.class);
 
-    private final String shiro_session_prefix = "shiro-session";
+    private final String shiro_session_prefix = "shiro-session:";
 
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;

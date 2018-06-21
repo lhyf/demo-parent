@@ -61,4 +61,10 @@ public class WebConst {
      * 同一篇文章在2个小时内无论点击多少次只算一次阅读
      */
     public static Integer HITS_LIMIT_TIME = 7200;
+
+
+    //////////////////////////////////////
+    /**存储在shiro session 中 username 的key*/
+    public static final String USERNAME_SESSION = "username";
+
 }

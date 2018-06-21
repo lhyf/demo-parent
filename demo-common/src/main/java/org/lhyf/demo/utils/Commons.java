@@ -2,6 +2,9 @@ package org.lhyf.demo.utils;
 
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.lhyf.demo.constant.WebConst;
 import org.springframework.stereotype.Component;
 
@@ -339,6 +342,31 @@ public class Commons {
         map.put("github", WebConst.initConfig.get(prefix + "github"));
         map.put("twitter", WebConst.initConfig.get(prefix + "twitter"));
         return map;
+    }
+
+    ////////////////////////////////
+
+    /**
+     * 存储到 shiro session 中
+     * @param key
+     * @param value
+     */
+    public static void saveSession(Object key,Object value){
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        session.setAttribute(key,value);
+    }
+
+    /**
+     * 从 shiro session中获取 value
+     * @param key
+     * @return
+     */
+    public static Object getSession(Object key){
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+
+        return session.getAttribute(key);
     }
 
 }

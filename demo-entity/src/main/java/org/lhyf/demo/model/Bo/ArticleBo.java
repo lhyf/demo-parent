@@ -1,8 +1,16 @@
-package org.lhyf.demo.pojo;
+package org.lhyf.demo.model.Bo;
+
+import org.lhyf.demo.pojo.TCategory;
 
 import java.util.Date;
 
-public class TArticle {
+/****
+ * @author YF
+ * @date 2018-06-21 14:19
+ * @desc ArticleBo
+ *
+ **/
+public class ArticleBo {
     private Integer id;
 
     private String title;
@@ -10,14 +18,14 @@ public class TArticle {
     private String uri;
 
 
-    private Integer categoryId;
+    private TCategory category;
 
-    private Integer userId;
 
     private Date createTime;
 
     private String status;
 
+    private String tags;
 
     private Integer hits;
 
@@ -46,7 +54,7 @@ public class TArticle {
     }
 
     public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
+        this.title = title;
     }
 
     public String getUri() {
@@ -54,23 +62,15 @@ public class TArticle {
     }
 
     public void setUri(String uri) {
-        this.uri = uri == null ? null : uri.trim();
+        this.uri = uri;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public TCategory getCategory() {
+        return category;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setCategory(TCategory category) {
+        this.category = category;
     }
 
     public Date getCreateTime() {
@@ -86,7 +86,7 @@ public class TArticle {
     }
 
     public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+        this.status = status;
     }
 
     public Integer getHits() {
@@ -142,6 +142,14 @@ public class TArticle {
     }
 
     public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+        this.content = content;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 }

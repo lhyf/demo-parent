@@ -1,6 +1,7 @@
 package org.lhyf.demo.service;
 
 import org.lhyf.demo.message.vo.ArticleVo;
+import org.lhyf.demo.model.Bo.ArticleBo;
 import org.lhyf.demo.pojo.TArticle;
 
 import java.util.List;
@@ -12,8 +13,10 @@ import java.util.List;
  *
  **/
 public interface ArticleService {
-    List<TArticle> findAll();
+    List<ArticleBo> findOwnAll(Integer userId);
+    TArticle insert(ArticleVo vo);
 
-    void insert(ArticleVo vo);
+    ArticleBo selectArticleById(Integer id);
 
+    int updateByExampleWithBLOBs(ArticleVo article);
 }

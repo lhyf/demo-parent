@@ -1,32 +1,25 @@
 package org.lhyf.demo.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
+import org.lhyf.demo.constant.WebConst;
 import org.lhyf.demo.message.vo.ArticleVo;
+import org.lhyf.demo.model.Bo.ArticleBo;
 import org.lhyf.demo.model.Bo.RestResponseBo;
-import org.lhyf.demo.pojo.TArticle;
-import org.lhyf.demo.pojo.TCategory;
-import org.lhyf.demo.pojo.TUser;
-import org.lhyf.demo.service.ArticleService;
-import org.lhyf.demo.service.CategoryService;
-import org.lhyf.demo.service.UserService;
+import org.lhyf.demo.pojo.*;
+import org.lhyf.demo.service.*;
+import org.lhyf.demo.utils.Commons;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 /****
@@ -50,6 +43,12 @@ public class ArticleController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TagService tagService;
+
+    @Autowired
+    private ArticleTagService articleTagService;
+
     /**
      * 保存文章
      * @param article
@@ -60,56 +59,110 @@ public class ArticleController {
     @PostMapping("/publish")
     public RestResponseBo publishArticle(@Valid ArticleVo article, BindingResult result){
 
-        Subject subject = SecurityUtils.getSubject();
-        String username = (String) subject.getSession().getAttribute("username");
+        String username = (String) Commons.getSession(WebConst.USERNAME_SESSION);
         TUser user = userService.selectByName(username);
         article.setUserId(user.getId());
+        TArticle a = articleService.insert(article);
 
         String tags = article.getTags();
         if(StringUtils.isNotBlank(tags)){
             String[] tag = tags.split(",");
-
+            for(String t:tag){
+                TTag tag1 = tagService.saveOrUpdate(new TTag(t, 0, new Date()));
+                articleTagService.insert(new TArticleTag(a.getId(),tag1.getId()));
+            }
         }
-        articleService.insert(article);
+
         return RestResponseBo.ok();
     }
 
-    @RequestMapping("/test")
-    public String test(Model model){
-
-        PageHelper.startPage(1, 2);
-        List<TArticle> datas = articleService.findAll();
-
-        PageInfo<TArticle> pi = new PageInfo<>(datas);
-
-
-        String s = JSON.toJSONString(pi);
-        System.out.println("===>" + s);
-
-        model.addAttribute("articles", pi);
-        return "admin/test";
-    }
-
+    /**
+     * 查看文章列表
+     * @param model
+     * @param page
+     * @return
+     */
     @RequestMapping("/list")
-    public String list(Model model) {
+    public String list(Model model , @RequestParam(value = "page" ,defaultValue = "1") int page) {
+        String username = (String) Commons.getSession(WebConst.USERNAME_SESSION);
+        TUser user = userService.selectByName(username);
 
-        PageHelper.startPage(1, 2);
-        List<TArticle> datas = articleService.findAll();
+        PageHelper.startPage(page, 2);
+        List<ArticleBo> datas = articleService.findOwnAll(user.getId());
 
-        PageInfo<TArticle> pi = new PageInfo<>(datas);
-
-
-        String s = JSON.toJSONString(pi);
-        System.out.println("===>" + s);
-
+        PageInfo<ArticleBo> pi = new PageInfo<>(datas);
         model.addAttribute("articles", pi);
         return "admin/article_list";
     }
 
+    /**
+     * 跳转到文章编辑页面
+     * @param model
+     * @return
+     */
     @RequestMapping("/publish")
     public String publish(Model model) {
+
         List<TCategory> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
         return "admin/article_edit";
+    }
+
+    /**
+     * 修改文章
+     * @param id 文章id
+     * @param model
+     * @return
+     */
+    @GetMapping(value = "/{id}")
+    public String editArticle(@PathVariable("id") Integer id , Model model){
+        ArticleBo articleBo = articleService.selectArticleById(id);
+        List<TTag> tags = tagService.selectTagLisByArticleId(id);
+
+        String tagStr = listToString(tags);
+        articleBo.setTags(tagStr);
+
+        List<TCategory> categories = categoryService.findAll();
+
+        model.addAttribute("article",articleBo);
+        model.addAttribute("categories", categories);
+        return "admin/article_edit";
+    }
+
+
+    /**
+     * 将List<TTag> 转为 String
+     * @param tags
+     * @return
+     */
+    private String listToString(List<TTag> tags){
+
+        StringBuffer sb = new StringBuffer();
+        for (TTag t:tags){
+            sb.append(t.getName() + ",");
+        }
+        if(StringUtils.isNotBlank(sb)){
+            sb.delete(sb.length()-1,sb.length());
+        }
+        return sb.toString();
+    }
+
+
+    @ResponseBody
+    @PostMapping("/modify")
+    public RestResponseBo modify(@Valid ArticleVo article, BindingResult result){
+
+        articleService.updateByExampleWithBLOBs(article);
+
+//        String tags = article.getTags();
+//        if(StringUtils.isNotBlank(tags)){
+//            String[] tag = tags.split(",");
+//            for(String t:tag){
+//                TTag tag1 = tagService.saveOrUpdate(new TTag(t, 0, new Date()));
+//                articleTagService.insert(new TArticleTag(article.getId(),tag1.getId()));
+//            }
+//        }
+
+        return RestResponseBo.ok();
     }
 }

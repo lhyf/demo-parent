@@ -1,6 +1,7 @@
 package org.lhyf.demo.mapper;
 
 import org.apache.ibatis.annotations.Param;
+import org.lhyf.demo.model.Bo.ArticleBo;
 import org.lhyf.demo.pojo.TArticle;
 import org.lhyf.demo.pojo.TArticleExample;
 
@@ -35,5 +36,9 @@ public interface TArticleMapper {
 
     int updateByPrimaryKey(TArticle record);
 
-    List<TArticle> findAll();
+    List<ArticleBo> findAll();
+
+    List<ArticleBo> findOwnAll(Integer userId);
+
+    ArticleBo selectArticleById(Integer id);
 }

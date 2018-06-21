@@ -27,9 +27,9 @@
                             <th:block th:each="post : ${articles.list}">
                                 <tr th:cid="${post.id}">
                                     <td>
-                                        <a th:href="@{'/admin/article/'+${post.id}}" th:text="${post.title}"></a>
+                                        <a th:href="@{'/article/'+${post.id}}" th:text="${post.title}"></a>
                                     </td>
-                                    <td><th:block th:text="${post.createTime}"/></td>
+                                    <td><th:block th:text="${#dates.format(post.createTime, 'yyyy-MM-dd HH:mm:ss')}"/></td>
                                     <td><th:block th:text="${post.hits}"/></td>
                                     <td><th:block th:text="${post.category.name}"/></td>
                                     <td>
@@ -41,7 +41,7 @@
                                         </th:block>
                                     </td>
                                     <td>
-                                        <a th:href="@{'/admin/article/'+${post.id}}"
+                                        <a th:href="@{'/article/'+${post.id}}"
                                            class="btn btn-primary btn-sm waves-effect waves-light m-b-5"><i
                                                 class="fa fa-edit"></i> <span>编辑</span></a>
                                         <a href="javascript:void(0)" th:onclick="'delPost('+${post.id}+');'"
