@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /****
  * @author YF
@@ -152,14 +153,20 @@ public class ArticleController {
     @PostMapping("/modify")
     public RestResponseBo modify(@Valid ArticleVo article, BindingResult result){
 
-        articleService.updateByExampleWithBLOBs(article);
+//        articleService.updateByExampleWithBLOBs(article);
+
+        Map<Integer, String> map = articleTagService.selectArticleTagIdAndTagName(article.getId());
+
+        for(Map.Entry entry:map.entrySet()){
+            System.out.println(entry.getKey() +":" + entry.getValue());
+        }
 
 //        String tags = article.getTags();
 //        if(StringUtils.isNotBlank(tags)){
 //            String[] tag = tags.split(",");
 //            for(String t:tag){
 //                TTag tag1 = tagService.saveOrUpdate(new TTag(t, 0, new Date()));
-//                articleTagService.insert(new TArticleTag(article.getId(),tag1.getId()));
+////                articleTagService.insert(new TArticleTag(a.getId(),tag1.getId()));
 //            }
 //        }
 

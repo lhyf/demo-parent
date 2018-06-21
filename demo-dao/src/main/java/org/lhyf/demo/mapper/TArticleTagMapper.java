@@ -6,6 +6,7 @@ import org.lhyf.demo.pojo.TArticleTag;
 import org.lhyf.demo.pojo.TArticleTagExample;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TArticleTagMapper {
     int countByExample(TArticleTagExample example);
@@ -32,4 +33,6 @@ public interface TArticleTagMapper {
 
 
     int update(ArticleVo article);
+
+    Map<Integer,String> selectArticleTagIdAndTagName(Integer aritcleId);
 }
