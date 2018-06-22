@@ -4,7 +4,7 @@ import org.lhyf.demo.utils.Commons;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  **/
 
-@Controller
+@Component
 public class BaseInterceptor implements HandlerInterceptor {
 
     private static Logger logger = LoggerFactory.getLogger(BaseInterceptor.class);
