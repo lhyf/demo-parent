@@ -184,7 +184,7 @@
     <result property="value" column="name" jdbcType="VARCHAR"></result>
   </resultMap>
 
-  <select id="selectArticleTagIdAndTagName" parameterType="java.lang.Integer" resultMap="articleTagIdAndTagNameResultMap">
+  <select id="selectArticleTagIdAndTagName" parameterType="java.lang.Integer" resultType="map">
     SELECT atag.id,t.name
     FROM t_article a ,t_article_tag atag ,t_tag t
     where a.id = atag.article_id and atag.tag_id=t.id

@@ -2,6 +2,8 @@ package org.lhyf.demo.service;
 
 import org.lhyf.demo.pojo.TArticleTag;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /****
@@ -14,5 +16,5 @@ public interface ArticleTagService {
 
     int insert(TArticleTag articleTag);
 
-    Map<Integer,String> selectArticleTagIdAndTagName(Integer aritcleId);
+    Map<Integer, String> selectArticleTagIdAndTagName(Integer aritcleId);
 }
