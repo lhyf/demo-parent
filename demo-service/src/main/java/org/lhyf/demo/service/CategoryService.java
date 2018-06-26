@@ -12,4 +12,6 @@ import java.util.List;
  **/
 public interface CategoryService {
     List<TCategory> findAll();
+
+    List<TCategory> listCategories();
 }

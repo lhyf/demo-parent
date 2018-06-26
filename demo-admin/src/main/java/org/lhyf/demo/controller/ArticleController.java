@@ -90,7 +90,7 @@ public class ArticleController {
         TUser user = userService.selectByName(username);
 
         PageHelper.startPage(page, 2);
-        List<ArticleBo> datas = articleService.findOwnAll(user.getId());
+        List<ArticleBo> datas = articleService.listOwnAllArticle(user.getId());
 
         PageInfo<ArticleBo> pi = new PageInfo<>(datas);
         model.addAttribute("articles", pi);
@@ -154,6 +154,7 @@ public class ArticleController {
 
 
     /**
+     * 对标签更新的处理:
      * 1.查询原文章所有对应记录
      * 2.将记录封装为 中间表ID ,标签名name 组成的map, key=Id value=name
      * 3.判断新传入的标签tag 是否在刚查询的map集合中
@@ -168,42 +169,35 @@ public class ArticleController {
     @PostMapping("/modify")
     public RestResponseBo modify(@Valid ArticleVo article, BindingResult result) {
 
-        Map<Integer, String> map = articleTagService.selectArticleTagIdAndTagName(article.getId());
+        Map<Integer, String> map = articleTagService.getArticleTagIdAndTagName(article.getId());
         String tags = article.getTags();
-//        boolean flag = false;
-//        if (StringUtils.isNotBlank(tags)) {
-//            String[] tag = tags.split(",");
-//            Iterator<Map.Entry<Integer, String>> it = map.entrySet().iterator();
-//            while (it.hasNext()) {
-//                Map.Entry<Integer, String> next = it.next();
-//                for (String t : tag) {
-//                    if (next.getValue().equals(t)) {
-//                        it.remove();
-//                    }
-//                }
-//            }
-//        }
-        boolean flag = false;
+        boolean addFlag = true;
         if (StringUtils.isNotBlank(tags)) {
             String[] tag = tags.split(",");
             for (String t : tag) {
-                flag = false;
+                addFlag = true;
                 Iterator<Map.Entry<Integer, String>> it = map.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry<Integer, String> next = it.next();
                     if (next.getValue().equals(t)) {
                         it.remove();
-                        flag = true;
+                        addFlag = false;
                     }
                 }
-                if(flag){
-                    System.out.println("需要添加的标签 : "  + t);
+                if(addFlag){ // 添加文章与标签的新的关联关系
+                    TTag tag1 = tagService.saveOrUpdate(new TTag(t, 0, new Date()));
+                    articleTagService.insert(new TArticleTag(article.getId(), tag1.getId()));
                 }
             }
         }
 
+        // 删除文章的与标签的关联关系
+        for(Map.Entry<Integer,String> entry:map.entrySet()){
+            articleTagService.deleteArticleAndTagById(entry.getKey());
+        }
 
-        System.out.println(map);
+        // 更新文章
+        articleService.updateByExampleWithBLOBs(article);
 
         return RestResponseBo.ok();
     }

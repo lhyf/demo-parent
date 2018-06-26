@@ -38,7 +38,7 @@ public interface TArticleMapper {
 
     List<ArticleBo> findAll();
 
-    List<ArticleBo> findOwnAll(Integer userId);
+    List<ArticleBo> listOwnAllArticle(Integer userId);
 
     ArticleBo selectArticleById(Integer id);
 }

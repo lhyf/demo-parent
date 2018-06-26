@@ -16,5 +16,12 @@ public interface ArticleTagService {
 
     int insert(TArticleTag articleTag);
 
-    Map<Integer, String> selectArticleTagIdAndTagName(Integer aritcleId);
+    Map<Integer, String> getArticleTagIdAndTagName(Integer aritcleId);
+
+    /**
+     * 删除文章与标签的关联关系,同时将标签的被引用数减少一
+     * @param key
+     * @return
+     */
+    int deleteArticleAndTagById(Integer key);
 }

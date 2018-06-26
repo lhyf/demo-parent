@@ -7,6 +7,8 @@ import org.lhyf.demo.pojo.TArticleTag;
 import org.lhyf.demo.service.ArticleTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,7 @@ public class ArticleTagServiceImpl implements ArticleTagService {
     @Autowired
     private TTagMapper tagMapper;
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public int insert(TArticleTag articleTag) {
 
@@ -46,7 +49,7 @@ public class ArticleTagServiceImpl implements ArticleTagService {
      * @return
      */
     @Override
-    public Map<Integer, String> selectArticleTagIdAndTagName(Integer aritcleId) {
+    public Map<Integer, String> getArticleTagIdAndTagName(Integer aritcleId) {
 
         List<Map<String, Object>> list = articleTagMapper.selectArticleTagIdAndTagName(aritcleId);
 
@@ -67,6 +70,15 @@ public class ArticleTagServiceImpl implements ArticleTagService {
         }
 
         return fkIdAndTagNames;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public int deleteArticleAndTagById(Integer id) {
+
+        TArticleTag articleTag = articleTagMapper.selectByPrimaryKey(id);
+        tagMapper.decrTagCountByPrimaryKey(articleTag.getTagId());
+        return articleTagMapper.deleteByPrimaryKey(id);
     }
 
 }

@@ -11,82 +11,34 @@
                     <div class="col-sm-12">
                         <h4 class="page-title">分类/标签管理</h4>
                     </div>
-                    <div class="col-md-6">
-                        <div class="panel panel-color panel-primary">
-                            <div class="panel-heading">
-                                <h1 class="panel-title">分类列表</h1>
-                            </div>
-                            <div class="panel-body">
-                                <th:block th:each="c : ${categories}">
-                                    <div class="btn-group m-b-10">
-                                        <th:block th:if="${c.name == '默认分类'}">
-                                            <button type="button"
-                                                    th:class="'btn btn-'+${adminCommons.rand_color()}+' waves-effect waves-light'">
-                                                <th:block th:text="${c.name}"/>
-                                                <th:block th:text="' ('+${c.count}+')'"/>
-                                            </button>
-                                        </th:block>
-                                        <th:block th:unless="${c.name == '默认分类'}">
-                                            <button type="button"
-                                                    th:class="'btn btn-'+${adminCommons.rand_color()}+' dropdown-toggle waves-effect waves-light'"
-                                                    data-toggle="dropdown" aria-expanded="false">
-                                                <th:block th:text="${c.name}"/>
-                                                <th:block th:text="' ('+${c.count}+')'"/>
-                                                <span
-                                                        class="caret"></span></button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="javascript:void(0)" th:attr="mid=${c.mid},cname=${c.name}"
-                                                       class="edit-category">修改</a>
-                                                </li>
-                                                <li><a href="javascript:void(0)" th:attr="mid=${c.mid}"
-                                                       class="del-category">删除</a></li>
-                                            </ul>
-                                        </th:block>
-                                    </div>
-                                </th:block>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="panel  panel-pink">
-                            <div class="panel-heading">
-                                <h1 class="panel-title">标签列表</h1>
-                            </div>
-                            <div class="panel-body">
-                                <th:block th:each="c : ${tags}">
-                                    <div class="btn-group m-b-10">
-                                        <button type="button"
-                                                th:class="'btn btn-'+${adminCommons.rand_color()}+' dropdown-toggle waves-effect waves-light'"
-                                                data-toggle="dropdown" aria-expanded="false">
-                                            <th:block th:text="${c.name}"/>
-                                            <th:block th:text="' ('+${c.count}+')'"/>
-                                            <span
-                                                    class="caret"></span></button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="javascript:void(0)" th:attr="mid=${c.mid}"
-                                                   class="del-category">删除</a></li>
-                                        </ul>
-                                    </div>
-                                </th:block>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <form id="cform" class="form-inline" role="form">
-                                    <input type="hidden" id="mid"/>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="cname" placeholder="请输入分类名称"/>
-                                    </div>
-                                    <button id="save-category-btn" type="button"
-                                            class="btn btn-success waves-effect waves-light m-l-10">保存分类
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th width="35%">类别</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="category : ${categories.list}">
+                                <tr th:cid="${category.id}">
+                                    <td>
+                                        <th:block th:text="${category.name}"/></td>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{'/article/'+${category.id}}"
+                                           class="btn btn-primary btn-sm waves-effect waves-light m-b-5"><i
+                                                class="fa fa-edit"></i> <span>编辑</span></a>
+                                        <a href="javascript:void(0)" th:onclick="'delPost('+${category.id}+');'"
+                                           class="btn btn-danger btn-sm waves-effect waves-light m-b-5"><i
+                                                class="fa fa-trash-o"></i> <span>删除</span></a>
+                                    </td>
+                                </tr>
+                            </th:block>
+
+                            </tbody>
+                        </table>
+                        <div th:replace="comm/macros :: pageAdminNav(${articles})"></div>
                     </div>
                 </div>
                 <div th:replace="admin/footer :: footer-content"></div>

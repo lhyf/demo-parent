@@ -48,8 +48,8 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     @Override
-    public List<ArticleBo> findOwnAll(Integer userId) {
-        return articleMapper.findOwnAll(userId);
+    public List<ArticleBo> listOwnAllArticle(Integer userId) {
+        return articleMapper.listOwnAllArticle(userId);
     }
 
     @Override
