@@ -7,6 +7,34 @@
     <div class="content-page">
         <div class="content">
             <div class="container">
+                <!--弹出框-->
+                <div class="modal fade" id="edit" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    类别
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon">修改:</span>
+                                    <input type="text"  class="form-control" >
+                                    <input type="hidden" id="cid"/>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary" id="save-category-btn" >保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--弹出框-->
+
                 <div class="row">
                     <div class="col-sm-12">
                         <h4 class="page-title">分类/标签管理</h4>
@@ -23,22 +51,21 @@
                             <th:block th:each="category : ${categories.list}">
                                 <tr th:cid="${category.id}">
                                     <td>
-                                        <th:block th:text="${category.name}"/></td>
+                                        <th:block th:text="${category.name}"/>
                                     </td>
                                     <td>
-                                        <a th:href="@{'/article/'+${category.id}}"
-                                           class="btn btn-primary btn-sm waves-effect waves-light m-b-5"><i
-                                                class="fa fa-edit"></i> <span>编辑</span></a>
-                                        <a href="javascript:void(0)" th:onclick="'delPost('+${category.id}+');'"
-                                           class="btn btn-danger btn-sm waves-effect waves-light m-b-5"><i
-                                                class="fa fa-trash-o"></i> <span>删除</span></a>
+                                        <button type="button" class="btn btn-success edit-category" data-toggle="modal" data-target="#edit" >编辑</button>
+
+                                        <button type="button" class="btn btn-danger">删除</button>
+
                                     </td>
                                 </tr>
                             </th:block>
 
                             </tbody>
                         </table>
-                        <div th:replace="comm/macros :: pageAdminNav(${articles})"></div>
+
+                        <div th:replace="comm/macros :: pageAdminNav(${categories})"></div>
                     </div>
                 </div>
                 <div th:replace="admin/footer :: footer-content"></div>
@@ -52,19 +79,19 @@
     var tale = new $.tale();
 
     $('#save-category-btn').click(function () {
-        var cname = $('#cform #cname').val();
-        var mid = $('#cform #mid').val();
+        var cname = $("input[type='text']").val();
+        var cid = $("input[type='hidden']").val();
         if (cname && cname != '') {
             tale.post({
-                url: '/admin/category/save',
-                data: {mid: mid, cname: cname},
+                url: '/category/update',
+                data: {id: cid, name: cname},
                 success: function (result) {
-                    $('#cform #mid').val('');
-                    $('#cform #cname').val('');
+                    $("input[type='text']").val('');
+                    $("input[type='hidden']").val('');
                     if (result && result.success) {
-                        tale.alertOkAndReload('分类保存成功');
+                        tale.alertOkAndReload('分类更新成功');
                     } else {
-                        tale.alertError(result.msg || '分类保存失败');
+                        tale.alertError(result.msg || '分类更新失败');
                     }
                 }
             });
@@ -72,10 +99,10 @@
     });
 
     $('.edit-category').click(function () {
-        var mid = $(this).attr('mid');
-        var cname = $(this).attr('cname');
-        $('#cform #mid').val(mid);
-        $('#cform #cname').val(cname);
+       var category = $(this).parent().parent().find("td:first-child").text();
+        $("input[type='text']").val($.trim(category));
+        var cid = $(this).parent().parent().attr("cid");
+        $("input[type='hidden']").val($.trim(cid));
     });
 
     $('.del-category').click(function () {

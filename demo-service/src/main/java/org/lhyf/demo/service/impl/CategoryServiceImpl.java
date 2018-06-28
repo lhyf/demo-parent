@@ -29,4 +29,9 @@ public class CategoryServiceImpl implements CategoryService {
     public List<TCategory> listCategories() {
         return categoryMapper.findAll();
     }
+
+    @Override
+    public int update(TCategory category){
+       return categoryMapper.updateByPrimaryKey(category);
+    }
 }

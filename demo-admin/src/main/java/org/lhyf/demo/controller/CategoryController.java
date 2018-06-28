@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.lhyf.demo.constant.WebConst;
 import org.lhyf.demo.model.Bo.ArticleBo;
+import org.lhyf.demo.model.Bo.RestResponseBo;
 import org.lhyf.demo.pojo.TCategory;
 import org.lhyf.demo.pojo.TUser;
 import org.lhyf.demo.service.CategoryService;
@@ -12,9 +13,7 @@ import org.lhyf.demo.utils.Commons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,5 +41,16 @@ public class CategoryController {
         PageInfo<TCategory> pi = new PageInfo<>(list);
         model.addAttribute("categories",pi);
         return "admin/category";
+    }
+
+    @ResponseBody
+    @PostMapping("/update")
+    public RestResponseBo update(@RequestParam("id") Integer id, @RequestParam("name") String name){
+        TCategory category = new TCategory();
+        category.setId(id);
+        category.setName(name);
+        categoryService.update(category);
+
+        return RestResponseBo.ok();
     }
 }

@@ -14,4 +14,6 @@ public interface CategoryService {
     List<TCategory> findAll();
 
     List<TCategory> listCategories();
+
+    int update(TCategory category);
 }
