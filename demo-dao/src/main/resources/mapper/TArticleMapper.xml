@@ -449,7 +449,7 @@
     </association>
   </resultMap>
 
-  <select id="findOwnAll" resultMap="findArticleWithCategoryResultMap" parameterType="java.lang.Integer" >
+  <select id="listOwnAllArticle" resultMap="findArticleWithCategoryResultMap" parameterType="java.lang.Integer" >
     select a.id as aid, a.title, a.uri, a.create_time, a.status, a.hits, a.pv, a.update_time,a.allow_feed, a.allow_ping, a.allow_comment,a.content,
     c.id as cid,c.name as cname
         from t_article a,t_category c,t_user u where a.category_id=c.id and a.user_id=u.id and a.user_id=#{userId,jdbcType=INTEGER}

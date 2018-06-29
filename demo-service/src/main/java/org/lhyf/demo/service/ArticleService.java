@@ -13,7 +13,7 @@ import java.util.List;
  *
  **/
 public interface ArticleService {
-    List<ArticleBo> findOwnAll(Integer userId);
+    List<ArticleBo> listOwnAllArticle(Integer userId);
     TArticle insert(ArticleVo vo);
 
     ArticleBo selectArticleById(Integer id);
