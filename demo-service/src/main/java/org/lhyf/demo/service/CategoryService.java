@@ -16,4 +16,23 @@ public interface CategoryService {
     List<TCategory> listCategories();
 
     int update(TCategory category);
+
+    int save(TCategory category);
+
+    int delete(Integer id);
+
+    /**
+     * 通过 分类id 增加引用数 +1
+     * @param id
+     * @return
+     */
+    int incrCategoryCountByPrimaryKey(Integer id);
+
+
+    /**
+     * 通过 分类id 减少引用数 -1
+     * @param id
+     * @return
+     */
+    int decrCategoryCountByPrimaryKey(Integer id);
 }

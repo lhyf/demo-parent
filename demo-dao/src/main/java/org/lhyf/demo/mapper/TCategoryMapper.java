@@ -31,4 +31,8 @@ public interface TCategoryMapper {
 
 
     List<TCategory> findAll();
+
+    int incrCategoryCountByPrimaryKey(Integer id);
+
+    int decrCategoryCountByPrimaryKey(Integer id);
 }

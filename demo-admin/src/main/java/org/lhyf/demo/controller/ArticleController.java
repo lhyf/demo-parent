@@ -12,7 +12,6 @@ import org.lhyf.demo.service.*;
 import org.lhyf.demo.utils.Commons;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /****
  * @author YF
@@ -65,6 +67,7 @@ public class ArticleController {
         article.setUserId(user.getId());
         TArticle a = articleService.insert(article);
 
+        // 插入标签关联关系
         String tags = article.getTags();
         if (StringUtils.isNotBlank(tags)) {
             String[] tag = tags.split(",");
@@ -73,6 +76,9 @@ public class ArticleController {
                 articleTagService.insert(new TArticleTag(a.getId(), tag1.getId()));
             }
         }
+
+        // 分类下文章数加一
+        categoryService.incrCategoryCountByPrimaryKey(article.getCategory());
 
         return RestResponseBo.ok();
     }
@@ -89,7 +95,7 @@ public class ArticleController {
         String username = (String) Commons.getSession(WebConst.USERNAME_SESSION);
         TUser user = userService.selectByName(username);
 
-        PageHelper.startPage(page, 2);
+        PageHelper.startPage(page, 10);
         List<ArticleBo> datas = articleService.listOwnAllArticle(user.getId());
 
         PageInfo<ArticleBo> pi = new PageInfo<>(datas);
@@ -120,7 +126,7 @@ public class ArticleController {
      */
     @GetMapping(value = "/{id}")
     public String editArticle(@PathVariable("id") Integer id, Model model) {
-        ArticleBo articleBo = articleService.selectArticleById(id);
+        ArticleBo articleBo = articleService.selectArticleWithCategoryById(id);
         List<TTag> tags = tagService.selectTagLisByArticleId(id);
 
         String tagStr = listToString(tags);
@@ -168,6 +174,7 @@ public class ArticleController {
     @ResponseBody
     @PostMapping("/modify")
     public RestResponseBo modify(@Valid ArticleVo article, BindingResult result) {
+        TArticle oldArticle = articleService.selectArticleById(article.getId());
 
         Map<Integer, String> map = articleTagService.getArticleTagIdAndTagName(article.getId());
         String tags = article.getTags();
@@ -196,9 +203,30 @@ public class ArticleController {
             articleTagService.deleteArticleAndTagById(entry.getKey());
         }
 
+        //更新分类下的文章数
+        if(oldArticle.getCategoryId() != article.getCategory()){
+            categoryService.incrCategoryCountByPrimaryKey(article.getCategory());
+            categoryService.decrCategoryCountByPrimaryKey(oldArticle.getCategoryId());
+        }
         // 更新文章
         articleService.updateByExampleWithBLOBs(article);
 
+        return RestResponseBo.ok();
+    }
+
+    @ResponseBody
+    @PostMapping("/delete")
+    public RestResponseBo deleteArticle(Integer id){
+        TArticle article = articleService.selectArticleById(id);
+
+        // 删除标签的关联关系
+        articleTagService.deleteArticleAndTagMappingByArticleId(id);
+
+        // 减少分类引用数
+        categoryService.decrCategoryCountByPrimaryKey(article.getCategoryId());
+
+        // 删除文章
+        articleService.deleteArticleById(id);
         return RestResponseBo.ok();
     }
 }

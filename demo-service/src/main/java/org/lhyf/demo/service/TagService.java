@@ -17,4 +17,18 @@ public interface TagService {
 
 
     List<TTag> selectTagLisByArticleId(Integer id);
+
+    /**
+     * 通过标签id 增加标签的被引用数 +1
+     * @param id
+     * @return
+     */
+    int incrTagCountByPrimaryKey(Integer id);
+
+    /**
+     * 通过标签id 减少标签的被引用数 -1
+     * @param id
+     * @return
+     */
+    int decrTagCountByPrimaryKey(Integer id);
 }

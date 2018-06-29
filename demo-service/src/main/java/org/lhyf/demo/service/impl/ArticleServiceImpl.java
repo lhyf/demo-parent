@@ -39,8 +39,8 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     @Override
-    public ArticleBo selectArticleById(Integer id){
-        return articleMapper.selectArticleById(id);
+    public ArticleBo selectArticleWithCategoryById(Integer id){
+        return articleMapper.selectArticleWithCategoryById(id);
     }
 
     /**
@@ -52,10 +52,18 @@ public class ArticleServiceImpl implements ArticleService {
         return articleMapper.listOwnAllArticle(userId);
     }
 
+
+    public TArticle selectArticleById(Integer id){
+        return articleMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int deleteArticleById(Integer articleId) {
+       return articleMapper.deleteByPrimaryKey(articleId);
+    }
+
     @Override
     public TArticle insert(ArticleVo vo) {
-
-
         TArticle article = new TArticle();
         article.setTitle(vo.getTitle());
         article.setUri(vo.getUri());

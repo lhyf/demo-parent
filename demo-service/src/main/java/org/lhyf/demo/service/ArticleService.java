@@ -16,7 +16,11 @@ public interface ArticleService {
     List<ArticleBo> listOwnAllArticle(Integer userId);
     TArticle insert(ArticleVo vo);
 
-    ArticleBo selectArticleById(Integer id);
+    ArticleBo selectArticleWithCategoryById(Integer id);
 
     int updateByExampleWithBLOBs(ArticleVo article);
+
+    TArticle selectArticleById(Integer id);
+
+    int deleteArticleById(Integer articleId);
 }

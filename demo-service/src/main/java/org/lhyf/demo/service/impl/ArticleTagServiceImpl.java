@@ -4,7 +4,9 @@ import org.lhyf.demo.mapper.TArticleTagMapper;
 import org.lhyf.demo.mapper.TTagMapper;
 import org.lhyf.demo.message.vo.ArticleVo;
 import org.lhyf.demo.pojo.TArticleTag;
+import org.lhyf.demo.pojo.TArticleTagExample;
 import org.lhyf.demo.service.ArticleTagService;
+import org.lhyf.demo.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -29,7 +31,7 @@ public class ArticleTagServiceImpl implements ArticleTagService {
 
 
     @Autowired
-    private TTagMapper tagMapper;
+    private TagService tagService;
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
@@ -39,12 +41,13 @@ public class ArticleTagServiceImpl implements ArticleTagService {
         int i = articleTagMapper.insert(articleTag);
 
         //更新tag表对应标签的统计数值
-        tagMapper.incrTagCountByPrimaryKey(articleTag.getTagId());
+        tagService.incrTagCountByPrimaryKey(articleTag.getTagId());
         return i;
     }
 
     /**
      * 通过aritcleId 查询 t_article_tag表对应的id 与 t_tag中存放的name
+     *
      * @param aritcleId
      * @return
      */
@@ -56,17 +59,17 @@ public class ArticleTagServiceImpl implements ArticleTagService {
         Map<Integer, String> fkIdAndTagNames = new HashMap<>();
         Integer id = null;
         String tagName = null;
-        for (Map<String, Object> map: list ) {
+        for (Map<String, Object> map : list) {
 
-            for(Map.Entry<String , Object> entry:map.entrySet()){
-                if("id".equals(entry.getKey())){
-                    id = (Integer)entry.getValue();
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                if ("id".equals(entry.getKey())) {
+                    id = (Integer) entry.getValue();
                 }
-                if("name".equals(entry.getKey())){
-                    tagName = (String)entry.getValue();
+                if ("name".equals(entry.getKey())) {
+                    tagName = (String) entry.getValue();
                 }
             }
-            fkIdAndTagNames.put(id,tagName);
+            fkIdAndTagNames.put(id, tagName);
         }
 
         return fkIdAndTagNames;
@@ -77,8 +80,35 @@ public class ArticleTagServiceImpl implements ArticleTagService {
     public int deleteArticleAndTagById(Integer id) {
 
         TArticleTag articleTag = articleTagMapper.selectByPrimaryKey(id);
-        tagMapper.decrTagCountByPrimaryKey(articleTag.getTagId());
+        tagService.decrTagCountByPrimaryKey(articleTag.getTagId());
         return articleTagMapper.deleteByPrimaryKey(id);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public int deleteArticleAndTagMappingByArticleId(Integer articleId) {
+        List<TArticleTag> articleTags = getArticleTagByArticleId(articleId);
+
+        for (TArticleTag tag : articleTags) {
+            tagService.decrTagCountByPrimaryKey(tag.getTagId());
+        }
+        int i = deleteArticleTagByArticleId(articleId);
+        return i;
+    }
+
+    @Override
+    public List<TArticleTag> getArticleTagByArticleId(Integer articleId) {
+        TArticleTagExample example = new TArticleTagExample();
+        example.createCriteria().andArticleIdEqualTo(articleId);
+        List<TArticleTag> list = articleTagMapper.selectByExample(example);
+        return list;
+    }
+
+    @Override
+    public int deleteArticleTagByArticleId(Integer articleId) {
+        TArticleTagExample example = new TArticleTagExample();
+        example.createCriteria().andArticleIdEqualTo(articleId);
+        return articleTagMapper.deleteByExample(example);
     }
 
 }

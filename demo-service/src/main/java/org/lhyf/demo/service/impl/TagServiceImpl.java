@@ -49,4 +49,14 @@ public class TagServiceImpl implements TagService {
        return tagMapper.selectTagLisByArticleId(id);
     }
 
+    @Override
+    public int incrTagCountByPrimaryKey(Integer id) {
+        return tagMapper.incrTagCountByPrimaryKey(id);
+    }
+
+    @Override
+    public int decrTagCountByPrimaryKey(Integer id) {
+        return tagMapper.decrTagCountByPrimaryKey(id);
+    }
+
 }

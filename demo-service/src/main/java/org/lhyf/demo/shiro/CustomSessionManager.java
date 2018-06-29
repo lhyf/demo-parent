@@ -5,8 +5,6 @@ import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.session.mgt.WebSessionKey;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletRequest;
 import java.io.Serializable;
@@ -20,6 +18,12 @@ import java.io.Serializable;
 public class CustomSessionManager extends DefaultWebSessionManager {
 
 
+    /**
+     * 获取session
+     * @param sessionKey
+     * @return
+     * @throws UnknownSessionException
+     */
     @Override
     protected Session retrieveSession(SessionKey sessionKey) throws UnknownSessionException {
         Serializable sessionId = getSessionId(sessionKey);

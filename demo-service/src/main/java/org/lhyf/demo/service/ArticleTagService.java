@@ -2,7 +2,6 @@ package org.lhyf.demo.service;
 
 import org.lhyf.demo.pojo.TArticleTag;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,4 +23,25 @@ public interface ArticleTagService {
      * @return
      */
     int deleteArticleAndTagById(Integer key);
+
+    /**
+     * 通过文章 Id 删除文章与标签的关联关系; 同时更新标签的被引用数
+     * @param id
+     */
+    int deleteArticleAndTagMappingByArticleId(Integer id);
+
+    /**
+     * 通过文章id 获取文章标签关联关系
+     * @param articleId
+     * @return
+     */
+    List<TArticleTag> getArticleTagByArticleId(Integer articleId);
+
+    /**
+     * 通过文章id 删除文章标签关联关系
+     * @param articleId
+     * @return
+     */
+    int deleteArticleTagByArticleId(Integer articleId);
+
 }

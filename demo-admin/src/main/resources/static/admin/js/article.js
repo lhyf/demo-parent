@@ -37,9 +37,14 @@ function subArticle(status) {
         tale.alertWarn('请输入文章内容');
         return;
     }
+    var categoryId = $('#multiple-sel').val();
+    if(categoryId == null || categoryId == ''){
+        tale.alertWarn('请选择文章分类')
+        return;
+    }
     $('#content-editor').val(content);
     $("#articleForm #status").val(status);
-    $("#articleForm #categories").val($('#multiple-sel').val());
+    $("#articleForm #categories").val(categoryId);
     var params = $("#articleForm").serialize();
     var url = $('#articleForm #cid').val() != '' ? '/article/modify' : '/article/publish';
     tale.post({

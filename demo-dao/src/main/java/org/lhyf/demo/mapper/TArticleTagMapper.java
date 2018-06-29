@@ -1,12 +1,10 @@
 package org.lhyf.demo.mapper;
 
-import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 import org.lhyf.demo.message.vo.ArticleVo;
 import org.lhyf.demo.pojo.TArticleTag;
 import org.lhyf.demo.pojo.TArticleTagExample;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

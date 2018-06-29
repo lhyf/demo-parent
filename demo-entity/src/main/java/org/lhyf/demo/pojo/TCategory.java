@@ -5,6 +5,9 @@ public class TCategory {
 
     private String name;
 
+    // 文章数
+    private int count ;
+
     public Integer getId() {
         return id;
     }
@@ -19,5 +22,13 @@ public class TCategory {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

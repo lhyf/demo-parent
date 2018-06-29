@@ -31,7 +31,33 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public int update(TCategory category){
-       return categoryMapper.updateByPrimaryKey(category);
+    public int update(TCategory category) {
+        return categoryMapper.updateByPrimaryKey(category);
+    }
+
+    @Override
+    public int save(TCategory category) {
+        return categoryMapper.insertSelective(category);
+    }
+
+    @Override
+    public int delete(Integer id) {
+        return categoryMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int incrCategoryCountByPrimaryKey(Integer id) {
+        if(id != null){
+            return categoryMapper.incrCategoryCountByPrimaryKey(id);
+        }
+        return 0;
+    }
+
+    @Override
+    public int decrCategoryCountByPrimaryKey(Integer id) {
+        if(id != null){
+            return categoryMapper.decrCategoryCountByPrimaryKey(id);
+        }
+        return 0;
     }
 }

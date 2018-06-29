@@ -40,5 +40,5 @@ public interface TArticleMapper {
 
     List<ArticleBo> listOwnAllArticle(Integer userId);
 
-    ArticleBo selectArticleById(Integer id);
+    ArticleBo selectArticleWithCategoryById(Integer id);
 }
