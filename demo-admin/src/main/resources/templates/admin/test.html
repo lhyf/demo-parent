@@ -3,11 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/admin/css/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/admin/css/style.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/admin/css/limonte-sweetalert2/6.4.1/sweetalert2.min.css}" rel="stylesheet"/>
+
+
+
+    <!--bootstrap js-->
+    <script src="/admin/js/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/admin/js/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!--文件上传-->
+    <link th:href="@{/admin/css/bootstrap-fileinput/css/fileinput.min.css}" rel="stylesheet"/>
+    <script src="/admin/js/bootstrap-fileinput/js/fileinput.min.js"></script>
+    <!--文件上传-->
 </head>
 <body>
-    <h1>Test Page erwe3w4 </h1>
-    <th:block th:each="post : ${articles.list}">
-        <div th:text="${post.id}"></div>
-    </th:block>
+<div class="container">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#edit">编辑</button>
+    <!--弹出框-->
+    <div class="modal fade" id="edit" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        修改
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="file-loading">
+                        <input id="input-b9" name="input-b9[]" multiple type="file">
+                    </div>
+                    <div id="kartik-file-errors"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).on('ready', function() {
+        $("#input-b9").fileinput({
+            showPreview: true,
+            showUpload: false,
+            elErrorContainer: '#kartik-file-errors',
+            allowedFileExtensions: ["jpg", "png", "gif"]
+            //uploadUrl: '/site/file-upload-single'
+        });
+    });
+</script>
 </body>
 </html>

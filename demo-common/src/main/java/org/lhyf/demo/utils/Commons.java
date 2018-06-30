@@ -159,7 +159,7 @@ public class Commons {
      * @return
      */
     public static String random(int max, String str) {
-        return UUID.random(1, max) + str;
+        return RandomUtils.random(1, max) + str;
     }
 
     /**

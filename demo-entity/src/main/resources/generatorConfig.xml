@@ -5,7 +5,8 @@
 
 <generatorConfiguration>
     <!--mysql 连接数据库jar 这里选择自己本地位置-->
-    <classPathEntry location="D:/mvn-repository/mysql/mysql-connector-java/5.1.44/mysql-connector-java-5.1.44.jar"/>
+    <!--<classPathEntry location="D:/mvn-repository/mysql/mysql-connector-java/5.1.44/mysql-connector-java-5.1.44.jar"/>-->
+    <classPathEntry location="D:/maven_repertory/mysql/mysql-connector-java/5.1.44/mysql-connector-java-5.1.44.jar"/>
     <context id="testTables" targetRuntime="MyBatis3">
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
@@ -48,11 +49,12 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         <!-- 指定数据库表 -->
-        <table  tableName="t_user"></table>
-        <table  tableName="t_category"></table>
-        <table  tableName="t_article"></table>
-        <table  tableName="t_article_tag"></table>
-        <table  tableName="t_comment"></table>
-        <table  tableName="t_tag"></table>
+        <table  tableName="t_picture"></table>
+        <!--<table  tableName="t_user"></table>-->
+        <!--<table  tableName="t_category"></table>-->
+        <!--<table  tableName="t_article"></table>-->
+        <!--<table  tableName="t_article_tag"></table>-->
+        <!--<table  tableName="t_comment"></table>-->
+        <!--<table  tableName="t_tag"></table>-->
     </context>
 </generatorConfiguration>

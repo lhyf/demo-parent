@@ -47,3 +47,7 @@ pagehelper:
 
 server:
   port: 8888
+
+# 图片上传路径
+picture:
+  save-path: D:\picture\

@@ -67,4 +67,6 @@ public class WebConst {
     /**存储在shiro session 中 username 的key*/
     public static final String USERNAME_SESSION = "username";
 
+
+
 }

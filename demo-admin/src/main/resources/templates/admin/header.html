@@ -11,10 +11,11 @@
     <link th:href="@{//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
     <link th:href="@{/admin/css/style.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/admin/css/limonte-sweetalert2/6.4.1/sweetalert2.min.css}" rel="stylesheet"/>
-
+    <link th:href="@{/admin/css/bootstrap-fileinput/css/fileinput.min.css}" rel="stylesheet"/>
     <!--bootstrap js-->
     <script src="/admin/js/jquery/2.1.1/jquery.min.js"></script>
     <script src="/admin/js/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -95,7 +96,12 @@
                 <li th:class="${active}=='category'?'active':''">
                     <a th:href="@{/category/list}"
                        th:class="${active}=='category'?'waves-effect active':'waves-effect'"><i
-                            class="fa fa-tags" aria-hidden="true"></i><span> 分类/标签 </span></a>
+                            class="fa fa-tags" aria-hidden="true"></i><span> 分类管理 </span></a>
+                </li>
+                <li th:class="${active}=='picture'?'active':''">
+                    <a th:href="@{/picture/list}"
+                       th:class="${active}=='picture'?'waves-effect active':'waves-effect'"><i
+                            class="fa fa-file-image-o" aria-hidden="true"></i><span> 图片管理 </span></a>
                 </li>
                 <li th:class="${active}=='attach'?'active':''">
                     <a th:href="@{/attach/list}"
