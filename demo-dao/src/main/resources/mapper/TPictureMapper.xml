@@ -6,6 +6,7 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="location" property="location" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="org.lhyf.demo.pojo.TPicture" extends="BaseResultMap" >
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, url, add_time, location,intro
+    id, title, url, add_time, update_time, location
   </sql>
   <sql id="Blob_Column_List" >
     intro
@@ -106,7 +107,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -124,12 +125,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="org.lhyf.demo.pojo.TPicture" >
-    insert into t_picture (id, title, url, 
-      add_time, location, intro
-      )
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{location,jdbcType=VARCHAR}, #{intro,jdbcType=LONGVARCHAR}
-      )
+    insert into t_picture (id, title, url,
+    add_time, update_time, location,
+    intro)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+    #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{location,jdbcType=VARCHAR},
+    #{intro,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.lhyf.demo.pojo.TPicture" >
     insert into t_picture
@@ -145,6 +146,9 @@
       </if>
       <if test="addTime != null" >
         add_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
       </if>
       <if test="location != null" >
         location,
@@ -165,6 +169,9 @@
       </if>
       <if test="addTime != null" >
         #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="location != null" >
         #{location,jdbcType=VARCHAR},
@@ -195,6 +202,9 @@
       <if test="record.addTime != null" >
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.location != null" >
         location = #{record.location,jdbcType=VARCHAR},
       </if>
@@ -209,11 +219,12 @@
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update t_picture
     set id = #{record.id,jdbcType=INTEGER},
-      title = #{record.title,jdbcType=VARCHAR},
-      url = #{record.url,jdbcType=VARCHAR},
-      add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      location = #{record.location,jdbcType=VARCHAR},
-      intro = #{record.intro,jdbcType=LONGVARCHAR}
+    title = #{record.title,jdbcType=VARCHAR},
+    url = #{record.url,jdbcType=VARCHAR},
+    add_time = #{record.addTime,jdbcType=TIMESTAMP},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    location = #{record.location,jdbcType=VARCHAR},
+    intro = #{record.intro,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -221,10 +232,11 @@
   <update id="updateByExample" parameterType="map" >
     update t_picture
     set id = #{record.id,jdbcType=INTEGER},
-      title = #{record.title,jdbcType=VARCHAR},
-      url = #{record.url,jdbcType=VARCHAR},
-      add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      location = #{record.location,jdbcType=VARCHAR}
+    title = #{record.title,jdbcType=VARCHAR},
+    url = #{record.url,jdbcType=VARCHAR},
+    add_time = #{record.addTime,jdbcType=TIMESTAMP},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    location = #{record.location,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -241,6 +253,9 @@
       <if test="addTime != null" >
         add_time = #{addTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="location != null" >
         location = #{location,jdbcType=VARCHAR},
       </if>
@@ -253,10 +268,11 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.lhyf.demo.pojo.TPicture" >
     update t_picture
     set title = #{title,jdbcType=VARCHAR},
-      url = #{url,jdbcType=VARCHAR},
-      add_time = #{addTime,jdbcType=TIMESTAMP},
-      location = #{location,jdbcType=VARCHAR},
-      intro = #{intro,jdbcType=LONGVARCHAR}
+    url = #{url,jdbcType=VARCHAR},
+    add_time = #{addTime,jdbcType=TIMESTAMP},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    location = #{location,jdbcType=VARCHAR},
+    intro = #{intro,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="org.lhyf.demo.pojo.TPicture" >
@@ -264,14 +280,14 @@
     set title = #{title,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
       location = #{location,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
   <!--List<TPicture> findAll();-->
   <select id="findAll" resultType="org.lhyf.demo.pojo.TPicture">
-    SELECT
-    <include refid="Base_Column_List" />
+    select
+    id, title, url, add_time, update_time, location , intro
       from t_picture
   </select>
 

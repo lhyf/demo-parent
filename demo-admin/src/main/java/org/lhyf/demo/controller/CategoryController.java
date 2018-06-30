@@ -63,7 +63,12 @@ public class CategoryController {
     @ResponseBody
     @PostMapping("/delete")
     public RestResponseBo delete(@RequestParam("id") Integer id){
-        categoryService.delete(id);
+        try{
+            categoryService.delete(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return RestResponseBo.fail("删除失败!");
+        }
         return RestResponseBo.ok();
     }
 }

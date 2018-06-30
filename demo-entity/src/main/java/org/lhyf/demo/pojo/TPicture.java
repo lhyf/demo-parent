@@ -11,6 +11,8 @@ public class TPicture {
 
     private Date addTime;
 
+    private Date updateTime;
+
     private String location;
 
     private String intro;
@@ -45,6 +47,14 @@ public class TPicture {
 
     public void setAddTime(Date addTime) {
         this.addTime = addTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getLocation() {

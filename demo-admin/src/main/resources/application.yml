@@ -27,6 +27,9 @@ spring:
       content-type: text/html
     mode: HTML
     cache: false
+  servlet: # multipart 文件上传大小
+    multipart:
+      max-file-size: 10MB
 
 debug: false
 logging:
@@ -45,9 +48,11 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
 
+
 server:
   port: 8888
 
 # 图片上传路径
 picture:
-  save-path: D:\picture\
+  save-path: picture/
+

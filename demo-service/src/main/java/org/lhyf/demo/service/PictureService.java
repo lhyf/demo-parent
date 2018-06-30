@@ -1,5 +1,6 @@
 package org.lhyf.demo.service;
 
+import org.lhyf.demo.message.vo.PictureVO;
 import org.lhyf.demo.pojo.TPicture;
 
 import java.util.List;
@@ -13,5 +14,9 @@ import java.util.List;
 public interface PictureService {
     List<TPicture> getAllPicture();
 
-    int savePicture();
+    int savePicture(PictureVO picture);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(PictureVO pic);
 }

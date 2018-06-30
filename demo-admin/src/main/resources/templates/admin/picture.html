@@ -1,11 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='分类管理',active='category'">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='分类管理',active='picture'">
 <header th:replace="admin/header::headerFragment(${title},${active})"></header>
 
-<!--文件上传-->
-
-
-<!--文件上传-->
 <body class="fixed-left">
 <div id="wrapper">
     <div th:replace="admin/header::header-body"></div>
@@ -21,20 +17,37 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
                                 </button>
-                                <h4 class="modal-title" id="myModalLabel">
-                                    类别
+                                <h4 class="modal-title">
+                                    修改
                                 </h4>
                             </div>
                             <div class="modal-body">
                                 <div class="input-group input-group-lg">
-                                    <span class="input-group-addon">修改:</span>
-                                    <input type="text" class="form-control">
-                                    <input type="hidden" id="cid"/>
+                                    <span class="input-group-addon">标题:</span>
+                                    <input type="text" id="update-title" class="form-control">
+                                    <input type="hidden" id="update-id"/>
                                 </div>
+                                <br>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon">地点:</span>
+                                    <input type="text" id="update-location" class="form-control">
+                                </div>
+                                <br>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon">介绍:</span>
+                                    <textarea class="form-control" id="update-intro" style="resize:vertical"></textarea>
+                                </div>
+                                <br>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon">图片:</span>
+                                    <input id="update-picture" name="i" multiple type="file">
+                                </div>
+                                <br>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" id="save-category-btn">保存</button>
+                                <button type="button" class="btn btn-primary" id="update-picture-btn">保存</button>
                             </div>
                         </div>
                     </div>
@@ -92,7 +105,7 @@
                         </button>
                     </div>
                     <div class="col-md-12">
-                        <table class="table table-striped table-bordered">
+                        <table id="mytable" class="table table-striped table-bordered">
                             <thead>
                             <tr>
                                 <th width="15%">标题</th>
@@ -105,13 +118,17 @@
                             </thead>
                             <tbody>
                             <th:block th:each="picture : ${piclist.list}">
-                                <tr th:cid="${picture.id}">
+                                <tr th:id="${picture.id}">
                                     <td>
                                         <th:block th:text="${picture.title}"/>
                                     </td>
                                     <td>
-                                        <img th:src="${picture.url}" class="img-rounded" height="50"
-                                             th:alt="${picture.title}">
+                                        <a th:href="${picture.url}" th:title="${picture.title}">
+                                            <img th:src="${picture.url}" class="img-rounded" height="50" th:alt="${picture.title}">
+                                        </a>
+
+                                        <!--<img th:src="${picture.url}" class="img-rounded" height="50"-->
+                                             <!--th:alt="${picture.title}">-->
                                     </td>
                                     <td>
                                         <th:block th:text="${picture.location}"/>
@@ -127,7 +144,7 @@
                                                 data-target="#edit">编辑
                                         </button>
 
-                                        <button type="button" class="btn btn-danger del-category">删除</button>
+                                        <button type="button" class="btn btn-danger del-picture">删除</button>
 
                                     </td>
                                 </tr>
@@ -145,7 +162,7 @@
     </div>
 </div>
 <div th:replace="admin/footer :: footer"></div>
-<script src="/admin/js/bootstrap-fileinput/js/fileinput.min.js"></script>
+
 <script type="text/javascript">
     /*<![CDATA[*/
     var tale = new $.tale();
@@ -156,6 +173,7 @@
         var title = $("#input-title").val();
         if (title == null || title == '') {
             tale.alertWarn("请填写标题");
+            return;
         }
 
         var location = $("#input-location").val();
@@ -180,13 +198,13 @@
             success: function (result) {
                 $("#insert_name").val('');
                 if (result && result.success) {
-                    tale.alertOkAndReload('分类添加成功');
+                    tale.alertOkAndReload('添加图片成功');
                 } else {
-                    tale.alertError(result.msg || '分类添加失败');
+                    tale.alertError(result.msg || '图片添加失败');
                 }
             },
             error: function (result) {
-                tale.alertError(result.msg || '分类添加失败');
+                tale.alertError(result.msg || '图片添加失败');
             }
         })
 
@@ -194,42 +212,76 @@
 
 
     // 更新分类
-    $('#save-category-btn').click(function () {
-        var cname = $("input[type='text']").val();
-        var cid = $("input[type='hidden']").val();
-        if (cname && cname != '') {
-            tale.post({
-                url: '/category/update',
-                data: {id: cid, name: cname},
-                success: function (result) {
-                    $("input[type='text']").val('');
-                    $("input[type='hidden']").val('');
-                    if (result && result.success) {
-                        tale.alertOkAndReload('分类更新成功');
-                    } else {
-                        tale.alertError(result.msg || '分类更新失败');
-                    }
-                }
-            });
+    $('#update-picture-btn').click(function () {
+        var data = new FormData();
+        var id = $('#update-id').val();
+        var title = $('#update-title').val();
+        var intro = $('#update-intro').val();
+        var location = $('#update-location').val();
+
+        if (title == null || title == '') {
+            tale.alertWarn('请添加标题!');
+            return;
         }
+
+        if ($("#update-picture").val().length > 1 && $("#update-picture").val() != '') {
+            data.append("picture", $("#update-picture").get(0).files[0]);//上传封面
+        } else {
+            tale.alertWarn('请添加封面!');
+            return;
+        }
+        data.append("id", id);
+        data.append("title", title);
+        data.append("intro", intro);
+        data.append("location", location);
+
+        $.ajax({
+            type: 'POST',
+            url: '/picture/update',
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                $("#insert_name").val('');
+                if (result && result.success) {
+                    tale.alertOkAndReload('更新图片成功');
+                } else {
+                    tale.alertError(result.msg || '图片更新失败');
+                }
+            },
+            error: function (result) {
+                tale.alertError(result.msg || '图片更新失败');
+            }
+        })
     });
     //显示编辑框
     $('.edit-category').click(function () {
-        var category = $(this).parent().parent().find("td:first-child").text();
-        $("input[type='text']").val($.trim(category));
-        var cid = $(this).parent().parent().attr("cid");
-        $("input[type='hidden']").val($.trim(cid));
+        $("#update-title").val('');
+        $("#update-intro").val('');
+        $("#update-location").val('');
+
+        var thisrow = $(this).parent().parent().children('td');
+        var title = thisrow.eq(0).text();
+        var location = thisrow.eq(2).text();
+        var intro = thisrow.eq(4).text();
+
+        $("#update-title").val($.trim(title));
+        $("#update-intro").val($.trim(intro));
+        $("#update-location").val($.trim(location));
+
+        var id = $(this).parent().parent().attr("id");
+        $("#update-id").val($.trim(id));
     });
 
-    // 删除分类
-    $('.del-category').click(function () {
-        var cid = $(this).parent().parent().attr('cid');
+    // 删除图片
+    $('.del-picture').click(function () {
+        var id = $(this).parent().parent().attr('id');
         tale.alertConfirm({
             title: '确定删除该项吗?',
             then: function () {
                 tale.post({
-                    url: '/category/delete',
-                    data: {id: cid},
+                    url: '/picture/delete',
+                    data: {id: id},
                     success: function (result) {
                         if (result && result.success) {
                             tale.alertOkAndReload('删除成功');
@@ -244,6 +296,13 @@
 
     $(document).on('ready', function () {
         $("#input-picture").fileinput({
+            showPreview: true,
+            showUpload: false,
+            elErrorContainer: '#kartik-file-errors',
+            allowedFileExtensions: ["jpg", "png", "gif"]
+            //uploadUrl: '/site/file-upload-single'
+        });
+        $("#update-picture").fileinput({
             showPreview: true,
             showUpload: false,
             elErrorContainer: '#kartik-file-errors',

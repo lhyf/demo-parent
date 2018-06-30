@@ -9,10 +9,21 @@ import org.springframework.web.multipart.MultipartFile;
  *
  **/
 public class PictureVO {
+    private Integer id;
     private String title;
     private String intro;
     private String location;
     private MultipartFile picture;
+    private String uri;
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -44,5 +55,13 @@ public class PictureVO {
 
     public void setPicture(MultipartFile picture) {
         this.picture = picture;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }
