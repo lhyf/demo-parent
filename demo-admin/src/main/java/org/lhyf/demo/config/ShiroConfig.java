@@ -136,7 +136,7 @@ public class ShiroConfig {
         chains.put("/admin/plugins/**", "anon");
         chains.put("/admin/logout", "anon");
         chains.put("/403", "anon");
-        chains.put("/**", "anon");
+        chains.put("/**", "authc");
 
 
         bean.setFilterChainDefinitionMap(chains);

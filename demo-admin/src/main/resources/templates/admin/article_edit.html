@@ -7,7 +7,8 @@
 
 <link href="//cdn.bootcss.com/multi-select/0.9.12/css/multi-select.css" rel="stylesheet"/>
 <link href="//cdn.bootcss.com/select2/3.4.8/select2.min.css" rel="stylesheet"/>
-<link th:href="@{/admin/plugins/md/css/style.css}" rel="stylesheet"/>
+<!--<link th:href="@{/admin/plugins/md/css/style.css}" rel="stylesheet"/>-->
+<link th:href="@{/admin/plugins/umeditor/themes/default/style.css}" rel="stylesheet"/>
 <style>
     #tags_tagsinput {
         background-color: #fafafa;
@@ -92,9 +93,10 @@
                             </div>
                             <div class="clearfix"></div>
                             <div class="form-group">
-                                <textarea style="height: 450px" autocomplete="off" id="text" name="text"
+<!--                                <textarea style="height: 450px" autocomplete="off" id="text" name="text"
                                           class="markdown-textarea"
-                                          th:utext="${article!=null and article.content !=null}?${article.content}: ''"></textarea>
+                                          th:utext="${article!=null and article.content !=null}?${article.content}: ''"></textarea>-->
+
                             </div>
 
                             <div class="form-group col-md-3 col-sm-4">
@@ -147,15 +149,19 @@
 <script th:src="@{/admin/plugins/tagsinput/jquery.tagsinput.min.js}"></script>
 <script th:src="@{/admin/plugins/jquery-multi-select/jquery.quicksearch.js}"></script>
 
-<script th:src="@{/admin/plugins/md/js/jquery.scrollto.js}"></script>
-<script th:src="@{/admin/plugins/md/js/pagedown.js}"></script>
-<script th:src="@{/admin/plugins/md/js/pagedown-extra.js}"></script>
-<script th:src="@{/admin/plugins/md/js/diff.js}"></script>
-<script th:src="@{/admin/plugins/md/js/md.js}"></script>
+<!--<script th:src="@{/admin/plugins/md/js/jquery.scrollto.js}"></script>-->
+<!--<script th:src="@{/admin/plugins/md/js/pagedown.js}"></script>-->
+<!--<script th:src="@{/admin/plugins/md/js/pagedown-extra.js}"></script>-->
+<!--<script th:src="@{/admin/plugins/md/js/diff.js}"></script>-->
+<!--<script th:src="@{/admin/plugins/md/js/md.js}"></script>-->
 
 <script th:src="@{//cdn.bootcss.com/multi-select/0.9.12/js/jquery.multi-select.min.js}"></script>
 <script th:src="@{//cdn.bootcss.com/select2/3.4.8/select2.min.js}"></script>
 <script th:src="@{//cdn.bootcss.com/jquery-toggles/2.0.4/toggles.min.js}"></script>
 <script th:src="@{/admin/js/article.js}"></script>
+
+<script th:src="@{/admin/plugins/umeditor/umeditor.config.js}"></script>
+<script th:src="@{/admin/plugins/umeditor/umeditor.js}"></script>
+
 </body>
 </html>

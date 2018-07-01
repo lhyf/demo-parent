@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='分类管理',active='category'">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='标签管理',active='tag'">
 <header th:replace="admin/header::headerFragment(${title},${active})"></header>
 <body class="fixed-left">
 <div id="wrapper">
@@ -17,7 +17,7 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
                                 </button>
                                 <h4 class="modal-title" id="myModalLabel">
-                                    类别
+                                    标签
                                 </h4>
                             </div>
                             <div class="modal-body">
@@ -43,7 +43,7 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
                                 </button>
                                 <h4 class="modal-title">
-                                    类别
+                                    标签
                                 </h4>
                             </div>
                             <div class="modal-body">
@@ -63,7 +63,7 @@
 
                 <div class="row">
                     <div class="col-sm-1">
-                        <h4 class="page-title">分类管理</h4>
+                        <h4 class="page-title">标签管理</h4>
                     </div>
                     <div class="col-sm-11">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insert" >添加</button>
@@ -72,19 +72,23 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                             <tr>
-                                <th width="35%">类别</th>
-                                <th width="35%">文章数</th>
+                                <th width="25%">标签</th>
+                                <th width="25%">引用数</th>
+                                <th width="25%">创建时间</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <th:block th:each="category : ${categories.list}">
-                                <tr th:cid="${category.id}">
+                            <th:block th:each="tag : ${tags.list}">
+                                <tr th:cid="${tag.id}">
                                     <td>
-                                        <th:block th:text="${category.name}"/>
+                                        <th:block th:text="${tag.name}"/>
                                     </td>
                                     <td>
-                                        <th:block th:text="${category.count}"/>
+                                        <th:block th:text="${tag.tagCount}"/>
+                                    </td>
+                                    <td>
+                                        <th:block th:text="${#dates.format(tag.createTime,'yyyy-MM-ss HH:mm:ss')}"/>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-success edit-category" data-toggle="modal" data-target="#edit" >编辑</button>
@@ -98,7 +102,7 @@
                             </tbody>
                         </table>
 
-                        <div th:replace="comm/macros :: pageAdminNav(${categories})"></div>
+                        <div th:replace="comm/macros :: pageAdminNav(${tags})"></div>
                     </div>
                 </div>
                 <div th:replace="admin/footer :: footer-content"></div>
@@ -115,35 +119,35 @@
         var cname = $("#insert_name").val();
         if(cname && cname != ''){
             tale.post({
-                url: '/category/save',
+                url: '/tag/save',
                 data: {name: cname},
                 success: function (result) {
                     $("#insert_name").val('');
                     if (result && result.success) {
-                        tale.alertOkAndReload('分类添加成功');
+                        tale.alertOkAndReload('标签添加成功');
                     } else {
-                        tale.alertError(result.msg || '分类添加失败');
+                        tale.alertError(result.msg || '标签添加失败');
                     }
                 }
             });
         }
     });
 
-    // 更新分类
+    // 更新标签
     $('#save-category-btn').click(function () {
         var cname = $("input[type='text']").val();
         var cid = $("input[type='hidden']").val();
         if (cname && cname != '') {
             tale.post({
-                url: '/category/update',
+                url: '/tag/update',
                 data: {id: cid, name: cname},
                 success: function (result) {
                     $("input[type='text']").val('');
                     $("input[type='hidden']").val('');
                     if (result && result.success) {
-                        tale.alertOkAndReload('分类更新成功');
+                        tale.alertOkAndReload('标签更新成功');
                     } else {
-                        tale.alertError(result.msg || '分类更新失败');
+                        tale.alertError(result.msg || '标签更新失败');
                     }
                 }
             });
@@ -157,14 +161,14 @@
         $("input[type='hidden']").val($.trim(cid));
     });
 
-    // 删除分类
+    // 删除标签
     $('.del-category').click(function () {
         var cid = $(this).parent().parent().attr('cid');
         tale.alertConfirm({
             title: '确定删除该项吗?',
             then: function () {
                 tale.post({
-                    url: '/category/delete',
+                    url: '/tag/delete',
                     data: {id: cid},
                     success: function (result) {
                         if (result && result.success) {

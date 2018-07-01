@@ -111,4 +111,11 @@ public class ArticleTagServiceImpl implements ArticleTagService {
         return articleTagMapper.deleteByExample(example);
     }
 
+    @Override
+    public int deleteArticleTagByTagId(Integer tagId) {
+        TArticleTagExample example = new TArticleTagExample();
+        example.createCriteria().andTagIdEqualTo(tagId);
+        return articleTagMapper.deleteByExample(example);
+    }
+
 }

@@ -35,4 +35,6 @@ public interface TTagMapper {
     int decrTagCountByPrimaryKey(Integer id);
 
     List<TTag> selectTagLisByArticleId(Integer id);
+
+    List<TTag> getAllTags();
 }

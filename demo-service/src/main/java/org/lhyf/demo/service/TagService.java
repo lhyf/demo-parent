@@ -31,4 +31,12 @@ public interface TagService {
      * @return
      */
     int decrTagCountByPrimaryKey(Integer id);
+
+    List<TTag> getAllTags();
+
+    TTag save(String  name);
+
+    int updateTagNameById(Integer id,String name);
+
+    int deleteByPrimaryKey(Integer id);
 }

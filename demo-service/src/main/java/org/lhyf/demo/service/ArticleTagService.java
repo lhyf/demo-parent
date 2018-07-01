@@ -44,4 +44,11 @@ public interface ArticleTagService {
      */
     int deleteArticleTagByArticleId(Integer articleId);
 
+    /**
+     * 通过标签 id 删除文章标签关联关系
+     * @param tagId
+     * @return
+     */
+    int deleteArticleTagByTagId(Integer tagId);
+
 }

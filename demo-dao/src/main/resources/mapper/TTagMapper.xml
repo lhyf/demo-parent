@@ -215,5 +215,11 @@
         SELECT t.* FROM t_article_tag ta,t_tag t WHERE  ta.tag_id=t.id and  ta.article_id= #{id,jdbcType=INTEGER}
     </select>
 
-
+    <!--List<TTag> getAllTags();-->
+    <select id="getAllTags" resultType="org.lhyf.demo.pojo.TTag">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM t_tag
+    </select>
+    
 </mapper>
