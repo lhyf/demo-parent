@@ -66,13 +66,16 @@ function subArticle(status) {
         }
     });
 }
-
+/*
 var textarea = $('#text'),
     toolbar = $('<div class="markdown-editor" id="md-button-bar" />').insertBefore(textarea.parent())
 preview = $('<div id="md-preview" class="md-hidetab" />').insertAfter('.markdown-editor');
 
 markdown(textarea, toolbar, preview);
+*/
 
+//实例化编辑器
+var um = UM.getEditor('myEditor');
 
 function allow_comment(obj) {
     var this_ = $(obj);

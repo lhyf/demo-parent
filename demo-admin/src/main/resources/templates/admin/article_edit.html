@@ -8,7 +8,7 @@
 <link href="//cdn.bootcss.com/multi-select/0.9.12/css/multi-select.css" rel="stylesheet"/>
 <link href="//cdn.bootcss.com/select2/3.4.8/select2.min.css" rel="stylesheet"/>
 <!--<link th:href="@{/admin/plugins/md/css/style.css}" rel="stylesheet"/>-->
-<link th:href="@{/admin/plugins/umeditor/themes/default/style.css}" rel="stylesheet"/>
+<link th:href="@{/admin/plugins/umeditor/themes/default/css/umeditor.css}" rel="stylesheet"/>
 <style>
     #tags_tagsinput {
         background-color: #fafafa;
@@ -96,6 +96,10 @@
 <!--                                <textarea style="height: 450px" autocomplete="off" id="text" name="text"
                                           class="markdown-textarea"
                                           th:utext="${article!=null and article.content !=null}?${article.content}: ''"></textarea>-->
+                                <!--style给定宽度可以影响编辑器的最终宽度-->
+                                <script type="text/plain" id="myEditor" style="height:450px;">
+                                    <p>这里我可以写一些输入提示</p>
+                                </script>
 
                             </div>
 
@@ -158,10 +162,10 @@
 <script th:src="@{//cdn.bootcss.com/multi-select/0.9.12/js/jquery.multi-select.min.js}"></script>
 <script th:src="@{//cdn.bootcss.com/select2/3.4.8/select2.min.js}"></script>
 <script th:src="@{//cdn.bootcss.com/jquery-toggles/2.0.4/toggles.min.js}"></script>
-<script th:src="@{/admin/js/article.js}"></script>
 
 <script th:src="@{/admin/plugins/umeditor/umeditor.config.js}"></script>
 <script th:src="@{/admin/plugins/umeditor/umeditor.js}"></script>
-
+<script th:src="@{/admin/plugins/umeditor/lang/zh-cn/zh-cn.js}"></script>
+<script th:src="@{/admin/js/article.js}"></script>
 </body>
 </html>
