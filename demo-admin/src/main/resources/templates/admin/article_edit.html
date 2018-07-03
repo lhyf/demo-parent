@@ -97,8 +97,8 @@
                                           class="markdown-textarea"
                                           th:utext="${article!=null and article.content !=null}?${article.content}: ''"></textarea>-->
                                 <!--style给定宽度可以影响编辑器的最终宽度-->
-                                <script type="text/plain" id="myEditor" style="height:450px;">
-                                    <p>这里我可以写一些输入提示</p>
+                                <script type="text/plain" id="myEditor" style="height:450px;" >
+
                                 </script>
 
                             </div>
@@ -167,5 +167,14 @@
 <script th:src="@{/admin/plugins/umeditor/umeditor.js}"></script>
 <script th:src="@{/admin/plugins/umeditor/lang/zh-cn/zh-cn.js}"></script>
 <script th:src="@{/admin/js/article.js}"></script>
+<script  th:inline="javascript" >
+    /*<![CDATA[*/
+    $(function(){
+        var content = [[${(article!=null and article.content !=null)? article.content:'' } ]];
+        UM.getEditor('myEditor').setContent(content);
+    });
+    /*]]>*/
+</script>
+
 </body>
 </html>

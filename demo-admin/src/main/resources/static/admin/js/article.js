@@ -32,7 +32,7 @@ function subArticle(status) {
         tale.alertWarn('请输入文章标题');
         return;
     }
-    var content = $('#text').val();
+    var content = UM.getEditor('myEditor').getContent();
     if (content == '') {
         tale.alertWarn('请输入文章内容');
         return;

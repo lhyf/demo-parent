@@ -8,6 +8,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
+import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,6 +58,34 @@ public class Uploader {
 		tmp.put("DIR", "目录创建失败");
 		tmp.put("UNKNOWN", "未知错误");
 
+	}
+	public void upload(MultipartFile upfile) throws Exception {
+
+		if (upfile == null) {
+			this.state = this.errorInfo.get("NOFILE");
+			return;
+		}
+		String savePath = this.getFolder(this.savePath);
+		try {
+			this.originalName = upfile.getOriginalFilename().substring(upfile.getOriginalFilename().lastIndexOf(System.getProperty("file.separator")) + 1);
+			if (!this.checkFileType(this.originalName)) {
+				this.state = this.errorInfo.get("TYPE");
+				return;
+			}
+			this.fileName = this.getName(this.originalName);
+			this.type = this.getFileExt(this.fileName);
+			this.url = savePath + "/" + this.fileName;
+			BufferedInputStream in = new BufferedInputStream(upfile.getInputStream());
+			File file = new File(this.getPhysicalPath(this.url));
+			FileOutputStream out = new FileOutputStream(file);
+			BufferedOutputStream output = new BufferedOutputStream(out);
+			Streams.copy(in, output, true);
+			this.state = this.errorInfo.get("SUCCESS");
+			this.size = file.length();
+
+		} catch (Exception e) {
+			this.state = this.errorInfo.get("UNKNOWN");
+		}
 	}
 
 	public void upload() throws Exception {

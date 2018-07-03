@@ -2,7 +2,9 @@ package org.lhyf.demo.controller;
 
 import org.lhyf.demo.utils.Uploader;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/umeditor")
 public class UmEditorController {
 
+    @ResponseBody
     @RequestMapping("imageUp")
-    public String imageUp(MultipartFile upfile, HttpServletRequest request, HttpServletResponse response, org.springframework.ui.Model modelMap) {
+    public String imageUp(MultipartFile upfile, HttpServletRequest request, HttpServletResponse response, Model modelMap) {
 
         Uploader up = new Uploader(request);
         up.setSavePath("upload");
@@ -28,7 +31,7 @@ public class UmEditorController {
         up.setAllowFiles(fileType);
         up.setMaxSize(10000); //单位KB
         try {
-            up.upload();
+            up.upload(upfile);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
